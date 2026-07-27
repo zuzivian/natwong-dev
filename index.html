@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nat Wong — Systems Thinker</title>
+<meta name="description" content="Nat Wong — Republic of Singapore Air Force officer, engineer, incoming Stanford Graduate School of Business MBA. Systems thinking across defense, hardware, ML, and product.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B1218;
+    --panel: #101A22;
+    --panel-line: #1D2C38;
+    --amber: #FFB000;
+    --amber-dim: #7A5A18;
+    --trace: #4A6572;
+    --ink: #E8EDF0;
+    --ink-muted: #8B9BA8;
+    --ink-faint: #506172;
+    --radius: 2px;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  ::selection{ background: var(--amber); color: #0B1218; }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .eyebrow::before{
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--amber);
+    flex-shrink: 0;
+  }
+
+  section{
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0 24px;
+    overflow: hidden;
+  }
+  .sweep-field{
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 900px; height: 900px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .sweep-field svg{ width: 100%; height: 100%; }
+  .sweep-arm{
+    transform-origin: 450px 450px;
+    animation: sweep 6s linear infinite;
+  }
+  @keyframes sweep{ to{ transform: rotate(360deg); } }
+
+  #tracks-group text{ user-select: none; }
+  #tracks-group g{ opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce){
+    .sweep-arm{ animation: none; }
+    #tracks-group{ display: none; }
+  }
+
+  .hero-inner{ position: relative; z-index: 2; max-width: 720px; }
+  .hero .eyebrow{ margin-bottom: 28px; }
+  h1{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  h1 span{ color: var(--amber); }
+  .hero-sub{
+    margin-top: 22px;
+    font-size: 1.08rem;
+    color: var(--ink-muted);
+    max-width: 560px;
+  }
+  .hero-coords{
+    margin-top: 44px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+  .scroll-cue{
+    position: absolute;
+    bottom: 40px; left: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .scroll-cue .line{ width: 32px; height: 1px; background: var(--ink-faint); }
+
+  /* ---------- DOMAINS / NETWORK ---------- */
+  .domains{ padding-top: 120px; padding-bottom: 100px; }
+  .section-head{ margin-bottom: 56px; max-width: 620px; }
+  .section-head h2{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 14px;
+  }
+  .section-head p{ color: var(--ink-muted); margin-top: 14px; font-size: 0.98rem; }
+
+  .node-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--panel-line);
+    border: 1px solid var(--panel-line);
+  }
+  .node{
+    background: var(--panel);
+    padding: 32px 28px;
+    position: relative;
+    transition: background 0.25s ease;
+  }
+  .node:hover{ background: #142029; }
+  .node-index{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--trace);
+    letter-spacing: 0.1em;
+  }
+  .node h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .node p{ color: var(--ink-muted); font-size: 0.92rem; }
+  .node-tag{
+    display: inline-block;
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    border: 1px solid var(--amber-dim);
+    padding: 3px 8px;
+    border-radius: var(--radius);
+  }
+
+  /* ---------- BIO ---------- */
+  .bio{ padding: 100px 24px; border-top: 1px solid var(--panel-line); }
+  .bio-inner{ max-width: 680px; }
+  .bio p{ font-size: 1.05rem; color: var(--ink); margin-bottom: 20px; }
+  .bio p:first-of-type::first-letter{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.2rem;
+    float: left;
+    line-height: 0.85;
+    padding-right: 10px;
+    padding-top: 4px;
+    color: var(--amber);
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{ padding: 100px 24px; border-top: 1px solid var(--panel-line); }
+  .tl-item{
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .tl-item:last-child{ border-bottom: none; }
+  .tl-date{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--amber);
+    padding-top: 3px;
+  }
+  .tl-content h4{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .tl-content p{ color: var(--ink-muted); font-size: 0.92rem; }
+
+  /* ---------- LOG / PLACEHOLDER ---------- */
+  .log{ padding: 100px 24px; border-top: 1px solid var(--panel-line); }
+  .log-empty{
+    border: 1px dashed var(--panel-line);
+    padding: 48px 32px;
+    text-align: left;
+    color: var(--ink-faint);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.9;
+  }
+  .log-empty .cursor{
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--amber);
+    margin-left: 4px;
+    animation: blink 1.1s step-end infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 70px 24px 50px;
+    border-top: 1px solid var(--panel-line);
+  }
+  .footer-inner{
+    max-width: 1040px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 28px;
+  }
+  .footer-links{ display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a{
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--ink-faint);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .footer-links a:hover{ color: var(--amber); border-color: var(--amber); }
+  .footer-meta{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+
+  a:focus-visible, .node:focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px){
+    .node-grid{ grid-template-columns: 1fr; }
+    .tl-item{ grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="sweep-field" aria-hidden="true">
+    <svg id="sweepSvg" viewBox="0 0 900 900">
+      <circle cx="450" cy="450" r="120" fill="none" stroke="#1D2C38" stroke-width="1"/>
+      <circle cx="450" cy="450" r="240" fill="none" stroke="#1D2C38" stroke-width="1"/>
+      <circle cx="450" cy="450" r="360" fill="none" stroke="#1D2C38" stroke-width="1"/>
+      <line x1="450" y1="20" x2="450" y2="880" stroke="#1D2C38" stroke-width="1"/>
+      <line x1="20" y1="450" x2="880" y2="450" stroke="#1D2C38" stroke-width="1"/>
+      <g class="sweep-arm">
+        <path d="M450,450 L450,90 A360,360 0 0,1 704,190 Z" fill="url(#sweepGrad)"/>
+      </g>
+
+      <defs>
+        <linearGradient id="sweepGrad" x1="450" y1="450" x2="704" y2="190" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#FFB000" stop-opacity="0.35"/>
+          <stop offset="1" stop-color="#FFB000" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- populated by JS: straight-line contacts, position only refreshed when the sweep passes over them -->
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <div class="eyebrow">NAT WONG // SINGAPORE → STANFORD, CA</div>
+    <h1>Systems thinker<br>across <span>domains.</span></h1>
+    <p class="hero-sub">Republic of Singapore Air Force officer, engineer, and incoming Stanford Graduate School of Business MBA candidate. I work at the seams where defense systems, hardware, machine learning, and product thinking overlap — because the same discipline of tracing inputs to outcomes runs through all of them.</p>
+    <div class="hero-coords mono">01.29°N, 103.79°E → 37.42°N, 122.16°W</div>
+  </div>
+
+  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+</section>
+
+<section class="domains">
+  <div class="section-head">
+    <div class="eyebrow">THE THROUGHLINE</div>
+    <h2>Four domains, one operating pattern.</h2>
+    <p>Different fields, same underlying question: how does a system behave under real conditions, and where does it break?</p>
+  </div>
+
+  <div class="node-grid">
+    <div class="node">
+      <div class="node-index mono">NODE / 01</div>
+      <h3>Air Defense Systems</h3>
+      <p>Commanded a Flight of approximately 30 personnel operating the Aster 30 ground-based air defense system as a Flight Commander in 163 Squadron, Republic of Singapore Air Force — real-time systems where detection, decision, and response have to work under pressure, every time.</p>
+      <span class="node-tag">OPERATIONS</span>
+    </div>
+    <div class="node">
+      <div class="node-index mono">NODE / 02</div>
+      <h3>Hardware &amp; Silicon</h3>
+      <p>Bachelor's and Master's degrees in Computer Engineering from Northwestern University, with a semester at ETH Zürich — grounding in how systems are built from the transistor up, not just how they're used.</p>
+      <span class="node-tag">ENGINEERING</span>
+    </div>
+    <div class="node">
+      <div class="node-index mono">NODE / 03</div>
+      <h3>ML &amp; Intelligent Systems</h3>
+      <p>Ongoing interest in how machine learning systems make decisions under uncertainty — the same core problem as air defense, at a different scale and with different stakes.</p>
+      <span class="node-tag">RESEARCH</span>
+    </div>
+    <div class="node">
+      <div class="node-index mono">NODE / 04</div>
+      <h3>Product &amp; Business</h3>
+      <p>Incoming MBA candidate, Stanford Graduate School of Business, Class of 2028 — translating systems fluency into product judgment: what to build, for whom, and why it matters.</p>
+      <span class="node-tag">STANFORD, CLASS OF 2028</span>
+    </div>
+  </div>
+</section>
+
+<section class="bio">
+  <div class="bio-inner">
+    <div class="eyebrow" style="margin-bottom: 20px;">ABOUT</div>
+    <p>My career started in a role where the cost of a bad system was measured in the worst possible terms — commanding an air defense unit means the feedback loop between decision and consequence is immediate and unforgiving. That's the lens I've carried into everything since: engineering degrees that taught me how systems are built, and now a Stanford MBA aimed at learning how to decide what gets built at all.</p>
+    <p>I'm drawn to problems that sit at intersections — hardware and software, human judgment and automated systems, operational discipline and product ambition. I'm currently exploring product management in tech, with a particular interest in the infrastructure, ML tooling, and platform layers where technical depth and product judgment both matter.</p>
+  </div>
+</section>
+
+<section class="timeline">
+  <div class="section-head">
+    <div class="eyebrow">TIMELINE</div>
+    <h2>How I got here.</h2>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date mono">2026–2028</div>
+    <div class="tl-content">
+      <h4>Stanford Graduate School of Business</h4>
+      <p>Incoming MBA candidate, Class of 2028.</p>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date mono">2019–2026</div>
+    <div class="tl-content">
+      <h4>Republic of Singapore Air Force</h4>
+      <p>Flight Commander, 163 Squadron — Aster 30 ground-based air defense system. Led a Flight of approximately 30 personnel.</p>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date mono">2015–2019</div>
+    <div class="tl-content">
+      <h4>Northwestern University</h4>
+      <p>Awarded the Public Service Commission Scholarship — Singapore's competitive national scholarship, a prerequisite for the Singapore Armed Forces Scholarship also received — to pursue Bachelor's and Master's degrees in Computer Engineering. Exchange semester at ETH Zürich, Fall 2018.</p>
+    </div>
+  </div>
+</section>
+
+<section class="log">
+  <div class="section-head">
+    <div class="eyebrow">PROJECTS</div>
+    <h2>Build log.</h2>
+  </div>
+  <div class="log-empty">
+    &gt; system initialized<br>
+    &gt; projects queue: empty<br>
+    &gt; status: first entries in progress<span class="cursor"></span>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="eyebrow" style="margin-bottom: 16px;">GET IN TOUCH</div>
+      <div class="footer-links">
+        <a href="mailto:natmikewong@gmail.com">EMAIL</a>
+        <a href="https://www.linkedin.com/in/natmikewong" target="_blank" rel="noopener">LINKEDIN</a>
+      </div>
+    </div>
+    <div class="footer-meta">NAT WONG © 2026 · BUILT FROM SCRATCH, ON PURPOSE</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var svg = document.getElementById('sweepSvg');
+  if(!svg) return;
+  var svgNS = 'http://www.w3.org/2000/svg';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+
+  var CENTER = 450;
+  // Straight-line corridors across the field. dur = time (ms) to fly p0 -> p1 before re-entering.
+  var defs = [
+    { p0:[30,300],  p1:[870,540], dur:27000, id:'TRK-04A' },
+    { p0:[220,30],  p1:[690,870], dur:19000, id:'TRK-07C' },
+    { p0:[870,660], p1:[60,360],  dur:33000, id:'TRK-02B' },
+    { p0:[60,780],  p1:[820,140], dur:23000, id:'TRK-11F' },
+    { p0:[780,60],  p1:[130,800], dur:29000, id:'TRK-09D' }
+  ];
+
+  var group = document.createElementNS(svgNS,'g');
+  group.setAttribute('id','tracks-group');
+  group.setAttribute('filter','url(#blipGlow)');
+  svg.appendChild(group);
+
+  var glowFilter = document.createElementNS(svgNS,'filter');
+  glowFilter.setAttribute('id','blipGlow');
+  glowFilter.setAttribute('x','-50%'); glowFilter.setAttribute('y','-50%');
+  glowFilter.setAttribute('width','200%'); glowFilter.setAttribute('height','200%');
+  glowFilter.innerHTML = '<feGaussianBlur stdDeviation="1.1" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>';
+  svg.appendChild(glowFilter);
+
+  var widths = [8,5.8,4];
+
+  var state = defs.map(function(def){
+    var g = document.createElementNS(svgNS,'g');
+    var line2 = document.createElementNS(svgNS,'line');
+    var line1 = document.createElementNS(svgNS,'line');
+    [line2, line1].forEach(function(l){
+      l.setAttribute('stroke','#FFB000');
+      l.setAttribute('stroke-width','1.2');
+      l.setAttribute('stroke-dasharray','2,5');
+      l.setAttribute('opacity','0.45');
+      l.style.display = 'none';
+      g.appendChild(l);
+    });
+    var trailEls = widths.map(function(w,i){
+      var r = document.createElementNS(svgNS,'rect');
+      r.setAttribute('width', w);
+      r.setAttribute('height', w);
+      r.setAttribute('fill','#FFB000');
+      r.setAttribute('opacity', (0.95 - i*0.25).toFixed(2));
+      r.style.display = 'none';
+      g.appendChild(r);
+      return { el:r, w:w };
+    });
+    var label = document.createElementNS(svgNS,'text');
+    label.setAttribute('font-family','IBM Plex Mono, monospace');
+    label.setAttribute('font-size','9');
+    label.setAttribute('fill','#8a6a22');
+    label.style.display = 'none';
+    label.textContent = def.id;
+    g.appendChild(label);
+    group.appendChild(g);
+    return { def:def, el:g, trailEls:trailEls, line1:line1, line2:line2, label:label, hist:[] };
+  });
+
+  function angleOf(x,y){
+    var dx = x-CENTER, dy = y-CENTER;
+    var a = Math.atan2(dx, -dy) * 180/Math.PI;
+    if(a<0) a += 360;
+    return a;
+  }
+  function crossed(prev, cur, target){
+    if(prev<=cur) return target>=prev && target<=cur;
+    return target>=prev || target<=cur; // wrapped past 360/0
+  }
+  function posAt(t, def){
+    return [ def.p0[0]+(def.p1[0]-def.p0[0])*t, def.p0[1]+(def.p1[1]-def.p0[1])*t ];
+  }
+  function place(rect, p){
+    rect.el.setAttribute('x', p[0]-rect.w/2);
+    rect.el.setAttribute('y', p[1]-rect.w/2);
+    rect.el.style.display = 'block';
+  }
+
+  var startTime = null;
+  var lastSweep = 0;
+
+  function frame(now){
+    if(startTime===null) startTime = now;
+    var elapsed = now - startTime;
+    var sweepAngle = (elapsed/6000*360) % 360;
+
+    state.forEach(function(s){
+      var t = (elapsed % s.def.dur) / s.def.dur;
+      var pos = posAt(t, s.def);
+      var ang = angleOf(pos[0], pos[1]);
+
+      if(crossed(lastSweep, sweepAngle, ang)){
+        // radar detection event: rugged CRT-style jitter on the snap
+        var jx = pos[0] + (Math.random()*5 - 2.5);
+        var jy = pos[1] + (Math.random()*5 - 2.5);
+        s.hist.unshift([jx,jy]);
+        if(s.hist.length>3) s.hist.pop();
+
+        s.trailEls.forEach(function(rect, i){
+          var p = s.hist[i];
+          if(p) place(rect, p); else rect.el.style.display='none';
+        });
+
+        if(s.hist.length>=2){
+          s.line1.setAttribute('x1', s.hist[0][0]); s.line1.setAttribute('y1', s.hist[0][1]);
+          s.line1.setAttribute('x2', s.hist[1][0]); s.line1.setAttribute('y2', s.hist[1][1]);
+          s.line1.style.display='block';
+        }
+        if(s.hist.length>=3){
+          s.line2.setAttribute('x1', s.hist[1][0]); s.line2.setAttribute('y1', s.hist[1][1]);
+          s.line2.setAttribute('x2', s.hist[2][0]); s.line2.setAttribute('y2', s.hist[2][1]);
+          s.line2.style.display='block';
+        }
+        s.label.setAttribute('x', s.hist[0][0]+8);
+        s.label.setAttribute('y', s.hist[0][1]-6);
+        s.label.style.display='block';
+        s.el.style.opacity = '1';
+      }
+    });
+
+    lastSweep = sweepAngle;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
