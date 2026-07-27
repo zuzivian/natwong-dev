@@ -1,2 +1,2 @@
 # natwong-dev
-Personal site on natwong
+Personal site on natwong.dev
