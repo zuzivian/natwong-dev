@@ -713,14 +713,37 @@
   if(reduce) return;
 
   var CENTER = 450;
-  // Straight-line corridors across the field. dur = time (ms) to fly p0 -> p1 before re-entering.
-  var defs = [
-    { p0:[30,300],  p1:[870,540], dur:27000, id:'TRK-04A' },
-    { p0:[220,30],  p1:[690,870], dur:19000, id:'TRK-07C' },
-    { p0:[870,660], p1:[60,360],  dur:33000, id:'TRK-02B' },
-    { p0:[60,780],  p1:[820,140], dur:23000, id:'TRK-11F' },
-    { p0:[780,60],  p1:[130,800], dur:29000, id:'TRK-09D' }
-  ];
+  var FIELD_R = 420;
+  var NUM_CONTACTS = 8;
+  // Speed band in px/ms, ~30% slower than the original fixed-line pass (was ~0.026–0.051 px/ms).
+  var SPEED_MIN = 0.0182, SPEED_MAX = 0.0357;
+  var ID_POOL = ['TRK-04A','TRK-07C','TRK-02B','TRK-11F','TRK-09D','TRK-15G','TRK-21K','TRK-18M','TRK-06P','TRK-13Q','TRK-27L','TRK-19S'];
+
+  // Each contact is a random chord across the radar field: two independent points on the
+  // field's boundary circle, so miss-distance from center varies naturally instead of every
+  // track funneling through the middle (real flight traffic isn't biased toward the radar's
+  // own origin). A minimum angular separation just avoids degenerate near-tangent chords that
+  // would barely clip the visible field.
+  function randomTrack(id){
+    var minSep = 0.35, maxSep = Math.PI*2 - 0.35;
+    var t1 = Math.random()*Math.PI*2;
+    var dtheta = minSep + Math.random()*(maxSep - minSep);
+    var t2 = t1 + dtheta;
+    var p0 = [ CENTER + FIELD_R*Math.cos(t1), CENTER + FIELD_R*Math.sin(t1) ];
+    var p1 = [ CENTER + FIELD_R*Math.cos(t2), CENTER + FIELD_R*Math.sin(t2) ];
+    var dist = 2*FIELD_R*Math.sin(dtheta/2);
+    var speed = SPEED_MIN + Math.random()*(SPEED_MAX - SPEED_MIN);
+    // Floor the duration so short near-edge chords don't read as a fast, glitchy dart —
+    // per-pixel speed stays correct, this just avoids a too-brief crossing.
+    var dur = Math.max(dist/speed, 8000);
+    return { p0:p0, p1:p1, dur: dur, id: id };
+  }
+
+  var shuffledIds = ID_POOL.slice().sort(function(){ return Math.random()-0.5; });
+  var defs = [];
+  for(var i=0;i<NUM_CONTACTS;i++){
+    defs.push(randomTrack(shuffledIds[i % shuffledIds.length]));
+  }
 
   var group = document.createElementNS(svgNS,'g');
   group.setAttribute('id','tracks-group');
