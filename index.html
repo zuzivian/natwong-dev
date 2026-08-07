@@ -102,8 +102,13 @@
     box-shadow: 0 0 8px var(--amber);
     flex-shrink: 0;
   }
-  .hero-github{
+  .hero-links{
     margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+  .hero-github{
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -256,6 +261,43 @@
     padding-right: 10px;
     padding-top: 4px;
     color: var(--amber);
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills{ padding: 100px 24px; border-top: 1px solid var(--panel-line); }
+  .skills-tier{ margin-bottom: 32px; }
+  .skills-tier:last-child{ margin-bottom: 0; }
+  .skills-tier-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .skill-tags{ display: flex; flex-wrap: wrap; gap: 10px; }
+  .skill-tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    border-radius: var(--radius);
+  }
+  .skill-tag.tier-top{
+    background: var(--amber);
+    color: #0B1218;
+    font-weight: 600;
+    border: 1px solid var(--amber);
+  }
+  .skill-tag.tier-proficient{
+    color: var(--amber);
+    border: 1px solid var(--amber-dim);
+    background: transparent;
+  }
+  .skill-tag.tier-basic{
+    color: var(--ink-faint);
+    border: 1px solid var(--panel-line);
+    background: transparent;
   }
 
   /* ---------- TIMELINE ---------- */
@@ -411,7 +453,10 @@
     <h1>Systems thinker<br>across <span>domains.</span></h1>
     <p class="hero-sub">Republic of Singapore Air Force officer, engineer, and incoming Stanford Graduate School of Business MBA candidate. I work at the seams where defense systems, hardware, machine learning, and product thinking overlap — because the same discipline of tracing inputs to outcomes runs through all of them.</p>
     <div class="hero-coords mono">01.29°N, 103.79°E → 37.42°N, 122.16°W</div>
-    <a class="hero-github" href="https://github.com/zuzivian" target="_blank" rel="noopener">↗ ALL PROJECTS — GITHUB.COM/ZUZIVIAN</a>
+    <div class="hero-links">
+      <a class="hero-github" href="https://github.com/zuzivian" target="_blank" rel="noopener">↗ ALL PROJECTS — GITHUB.COM/ZUZIVIAN</a>
+      <a class="hero-github" href="Nathaniel_Wong_Resume.pdf" download>↓ DOWNLOAD RESUME (PDF)</a>
+    </div>
   </div>
 
   <div class="scroll-cue"><span class="line"></span>SCROLL</div>
@@ -458,6 +503,48 @@
     <p>My career started in a role where the cost of a bad system was measured in the worst possible terms — commanding an air defense unit means the feedback loop between decision and consequence is immediate and unforgiving. That's the lens I've carried into everything since: engineering degrees that taught me how systems are built, and now a Stanford MBA aimed at learning how to decide what gets built at all.</p>
     <p>I'm drawn to problems that sit at intersections — hardware and software, human judgment and automated systems, operational discipline and product ambition. I'm currently exploring product management in tech, with a particular interest in the infrastructure, ML tooling, and platform layers where technical depth and product judgment both matter.</p>
     <p class="bio-meta mono">WORK AUTHORIZATION — F-1 VISA, AUTHORIZED VIA CPT (CURRICULAR PRACTICAL TRAINING)</p>
+  </div>
+</section>
+
+<section class="skills">
+  <div class="section-head">
+    <div class="eyebrow">CAPABILITIES</div>
+    <h2>What I bring.</h2>
+    <p>Tiered by depth — from core practice to working familiarity.</p>
+  </div>
+
+  <div class="skills-tier">
+    <div class="skills-tier-label">Top</div>
+    <div class="skill-tags">
+      <span class="skill-tag tier-top">PRODUCT MANAGEMENT</span>
+      <span class="skill-tag tier-top">PRODUCT OWNERSHIP</span>
+      <span class="skill-tag tier-top">OPERATIONS</span>
+      <span class="skill-tag tier-top">CRISIS MANAGEMENT</span>
+    </div>
+  </div>
+
+  <div class="skills-tier">
+    <div class="skills-tier-label">Proficient</div>
+    <div class="skill-tags">
+      <span class="skill-tag tier-proficient">AGILE</span>
+      <span class="skill-tag tier-proficient">SCRUM</span>
+      <span class="skill-tag tier-proficient">C++</span>
+      <span class="skill-tag tier-proficient">PYTHON</span>
+      <span class="skill-tag tier-proficient">REACT</span>
+      <span class="skill-tag tier-proficient">NODE.JS</span>
+      <span class="skill-tag tier-proficient">JAVASCRIPT</span>
+      <span class="skill-tag tier-proficient">HTML</span>
+      <span class="skill-tag tier-proficient">CSS</span>
+    </div>
+  </div>
+
+  <div class="skills-tier">
+    <div class="skills-tier-label">Basic</div>
+    <div class="skill-tags">
+      <span class="skill-tag tier-basic">VERILOG</span>
+      <span class="skill-tag tier-basic">VHDL</span>
+      <span class="skill-tag tier-basic">JAVA</span>
+    </div>
   </div>
 </section>
 
@@ -607,6 +694,7 @@
     <div>
       <div class="eyebrow" style="margin-bottom: 16px;">GET IN TOUCH</div>
       <div class="footer-links">
+        <a href="Nathaniel_Wong_Resume.pdf" download>RESUME</a>
         <a href="https://github.com/zuzivian" target="_blank" rel="noopener">GITHUB</a>
         <a href="mailto:natmikewong@gmail.com">EMAIL</a>
         <a href="https://www.linkedin.com/in/natmikewong" target="_blank" rel="noopener">LINKEDIN</a>
