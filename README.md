@@ -21,7 +21,7 @@ Heading into Stanford GSB recruiting, I needed a personal portfolio site that ga
 
 - **Blog / writing section** — deferred. No content plan yet; adding an empty section would signal neglect rather than depth. Revisit once there's actual writing to publish.
 - **Case studies / project write-ups** — deferred, intentionally. The original build-log placeholder was removed in the portfolio-first redesign; the Work section now lists four real side projects. Case studies wait until there is a project worth the write-up.
-- **Employer-detail pages** — Qeris and defense work stay deliberately vague on the site (role, theme, no counts of customers or agencies); detail lives on the resume, which is shared on request or via the download link.
+- **Employer-detail pages** — Qeris and defense work stay deliberately vague on the site (role, theme, no counts of customers or agencies); detail lives on the resume, which is shared on request.
 - **Multi-page architecture** — explicitly deferred in favor of a single scrollable page. Revisit if the blog or case-study sections mature enough to need dedicated pages.
 
 ## User Stories
@@ -52,7 +52,7 @@ Heading into Stanford GSB recruiting, I needed a personal portfolio site that ga
 - [x] Open Graph / Twitter card metadata; the share image was regenerated in Oct 2026 to match the current light theme and positioning ("I build products for systems that fly")
 - [x] Favicon
 - [x] Portfolio-first redesign with plain-English positioning, circular headshot in the radar scope, Work section, tiered Skills section
-- [x] Resume download (PDF in the repo root; the NVIDIA PM version as of 2026-10-18), contact via LinkedIn only to cut down on spam
+- [x] Contact via LinkedIn only to cut down on spam; resume shared on request (header download button removed 2026-10-31)
 - [x] Technical hygiene (Oct 2026): self-hosted fonts (no render-blocking Google Fonts request), canonical URL, JSON-LD `Person` schema, `robots.txt`, `sitemap.xml`, radar animation paused when off screen or tab hidden and reduced to three contacts on phones, Vercel Web Analytics
 
 ### Future Considerations (P2) — explicitly not built, but designed not to block
