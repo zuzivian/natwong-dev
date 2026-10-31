@@ -1,149 +1,926 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nat Wong, product manager for aerospace, drones and AI</title>
-<meta name="description" content="Nat Wong is a former Singapore Air Force officer and Stanford MBA student who builds hardware and software products. Looking for a summer 2027 product internship in aerospace, drones and AI.">
-<link rel="canonical" href="https://natwong.dev/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nat Wong — Product Manager, Aerospace &amp; AI</title>
+<meta name="description" content="Nat Wong — product manager for aerospace, defense, and AI. Seven years in the Singapore Air Force, go-to-market at an AI drone startup, computer engineer, Stanford MBA candidate.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23FFFFFF'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23C6D3E2' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='11' fill='none' stroke='%23C6D3E2' stroke-width='2'/%3E%3Cpath d='M32 17 L43 45 L32 38 L21 45 Z' fill='%231751C6'/%3E%3C/svg%3E">
+
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://natwong.dev/">
-<meta property="og:title" content="Nat Wong, product manager for aerospace, drones and AI">
-<meta property="og:description" content="Nat Wong is a former Singapore Air Force officer and Stanford MBA student who builds hardware and software products. Looking for a summer 2027 product internship in aerospace, drones and AI.">
+<meta property="og:title" content="Nat Wong — Product Manager, Aerospace &amp; AI">
+<meta property="og:description" content="Product manager for aerospace, defense, and AI. Seven years in the Singapore Air Force, go-to-market at an AI drone startup, Stanford MBA candidate.">
 <meta property="og:image" content="https://natwong.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Nat Wong, product manager for aerospace, drones and AI.">
+<meta property="og:image:alt" content="Nat Wong — product manager for aerospace, defense, and AI.">
+
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nat Wong, product manager for aerospace, drones and AI">
-<meta name="twitter:description" content="Nat Wong is a former Singapore Air Force officer and Stanford MBA student who builds hardware and software products. Looking for a summer 2027 product internship in aerospace, drones and AI.">
+<meta name="twitter:title" content="Nat Wong — Product Manager, Aerospace &amp; AI">
+<meta name="twitter:description" content="Product manager for aerospace, defense, and AI. Seven years in the Singapore Air Force, go-to-market at an AI drone startup, Stanford MBA candidate.">
 <meta name="twitter:image" content="https://natwong.dev/og-image.png">
+
+<link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="canonical" href="https://natwong.dev/">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Nat Wong","alternateName":"Nathaniel Wong","url":"https://natwong.dev/","image":"https://natwong.dev/headshot.jpg","jobTitle":"Product manager, aerospace, defense, and AI","alumniOf":[{"@type":"CollegeOrUniversity","name":"Stanford Graduate School of Business"},{"@type":"CollegeOrUniversity","name":"Northwestern University"}],"sameAs":["https://www.linkedin.com/in/natmikewong","https://github.com/zuzivian"]}
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  @font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:500 700; font-display:swap; src:url(fonts/space-grotesk.woff2) format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face{ font-family:'IBM Plex Sans'; font-style:normal; font-weight:400 600; font-display:swap; src:url(fonts/ibm-plex-sans.woff2) format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face{ font-family:'IBM Plex Mono'; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/ibm-plex-mono-400.woff2) format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face{ font-family:'IBM Plex Mono'; font-style:normal; font-weight:500; font-display:swap; src:url(fonts/ibm-plex-mono-500.woff2) format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
   :root{
-    --bg:#FFFFFF;
-    --ink:#0F1E2E;
-    --muted:#4A5C70;
-    --line:#E4EAF1;
-    --accent:#1751C6;
-    --maxw:680px;
+    --bg: #FFFFFF;
+    --bg-soft: #F6F8FB;
+    --line: #E4EAF1;
+    --line-strong: #CFD9E5;
+
+    --ink: #0F1E2E;
+    --ink-2: #4A5C70;
+    --ink-3: #8294A8;
+
+    --blue: #1751C6;
+    --blue-soft: #EDF3FD;
+    --amber: #D98A00;
+
+    /* deep surface — used only for the two primary calls to action */
+    --navy: #0F2C5E;
+    --navy-hi: #17417F;
+
+    --radius: 3px;
+    --bar-h: 60px;
+    --maxw: 940px;
   }
-  *{box-sizing:border-box}
-  html{font-size:18px}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:1rem;line-height:1.65}
-  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.2;margin:0}
-  a{color:var(--accent);text-underline-offset:3px}
-  a:hover{text-decoration-thickness:2px}
-  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  header{border-bottom:1px solid var(--line)}
-  nav{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;padding:20px 0}
-  nav .name{font-family:'Fraunces',Georgia,serif;font-weight:600;color:var(--ink);text-decoration:none;margin-right:auto}
-  nav a{color:var(--ink)}
-  .hero{padding:64px 0 48px;display:grid;grid-template-columns:1fr 160px;gap:32px;align-items:start}
-  .hero h1{font-size:2.3rem;margin-bottom:20px}
-  .hero p{margin:0 0 16px;color:var(--ink)}
-  .portrait{width:160px;height:160px;border-radius:50%;object-fit:cover;border:1px solid var(--line);background:var(--line)}
-  section{padding:48px 0;border-top:1px solid var(--line)}
-  h2{font-size:1.6rem;margin-bottom:8px}
-  .sub{color:var(--muted);margin:0 0 28px}
-  .item{margin-bottom:28px}
-  .item h3{font-size:1.15rem;margin-bottom:4px}
-  .item p{margin:0 0 6px}
-  .links a{margin-right:16px}
-  .tag{color:var(--muted)}
-  .timeline{list-style:none;padding:0;margin:0}
-  .timeline li{display:grid;grid-template-columns:130px 1fr;gap:16px;margin-bottom:20px}
-  .timeline .when{color:var(--muted)}
-  .timeline strong{font-weight:600}
-  footer{padding:32px 0 56px;color:var(--muted);border-top:1px solid var(--line)}
-  .btn{display:inline-block;background:var(--accent);color:var(--bg);padding:10px 20px;border-radius:3px;text-decoration:none;font-weight:600}
-  .btn:hover{text-decoration:underline}
-  @media (max-width:560px){
-    .hero{grid-template-columns:1fr;padding-top:40px}
-    .portrait{order:-1;width:120px;height:120px}
-    .hero h1{font-size:1.9rem}
-    .timeline li{grid-template-columns:1fr;gap:0}
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background-color: var(--bg);
+    /* barely-there dot field — texture, not pattern */
+    background-image: radial-gradient(rgba(15,44,94,0.045) 1px, transparent 1px);
+    background-size: 26px 26px;
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: var(--blue); color: #fff; }
+  a{ color: var(--blue); }
+
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  .label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: var(--bar-h);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand svg{ width: 20px; height: 20px; }
+  .brand b{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .nav{ display: flex; align-items: center; gap: 26px; }
+  .nav a{
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  .nav a:hover{ color: var(--blue); }
+  .nav a.cta{
+    color: #fff;
+    font-weight: 500;
+    background: var(--navy);
+    border: 1px solid var(--navy);
+    border-radius: var(--radius);
+    padding: 7px 15px;
+  }
+  .nav a.cta:hover{ background: var(--navy-hi); border-color: var(--navy-hi); color: #fff; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding: 46px 0 62px; border-top: none; }
+  .jumbo{
+    position: relative;
+    overflow: hidden;
+    padding: 10px 0 0;
+  }
+  .jumbo-main, .stats{ position: relative; z-index: 1; }
+  .jumbo-main{ max-width: 580px; }
+  .who{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+  }
+  .who img{
+    width: 76px; height: 76px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--line-strong);
+    display: block;
+    flex-shrink: 0;
+  }
+  .who .nm{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .who .rl{ font-size: 0.88rem; color: var(--ink-2); }
+
+  h1{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  h1 span{ color: var(--blue); }
+  .lede{
+    margin-top: 16px;
+    font-size: 1.05rem;
+    color: var(--ink-2);
+    max-width: 560px;
+  }
+  .avail{
+    margin-top: 18px;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    max-width: 480px;
+  }
+  .avail i{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
+    display: block;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  .stats{
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line-strong);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 56px;
+  }
+  .stats div{ min-width: 0; }
+  .stats b{
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .stats span{
+    font-size: 0.82rem;
+    color: var(--ink-2);
+  }
+
+  /* ---------- RADAR (decorative watermark, takes no layout space) ---------- */
+  .radar{
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    right: -14px;
+    width: 340px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .radar svg{ width: 100%; height: auto; display: block; }
+  .radar .ring{ fill: none; stroke: #DFE6EF; }
+  .radar .ring.outer{ stroke: #CBD6E4; }
+  #tracks text{ user-select: none; }
+  /* portrait sits in the centre of the scope, inside the middle ring */
+  .radar .face{
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 58%; height: 58%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px var(--line-strong), 0 12px 32px rgba(15,44,94,0.16);
+  }
+  .radar .face img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* desktop: the big portrait replaces the thumbnail */
+  @media (min-width: 861px){
+    .who img{ display: none; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding: 60px 0; border-top: 1px solid var(--line); scroll-margin-top: var(--bar-h); }
+  .head{ margin-bottom: 30px; }
+  .head h2{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-top: 8px;
+  }
+  .head p{ color: var(--ink-2); margin-top: 10px; max-width: 620px; }
+
+  /* ---------- WORK ---------- */
+  .cards{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .card{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover{
+    border-color: var(--line-strong);
+    box-shadow: 0 2px 14px rgba(15,30,46,0.06);
+  }
+  .card-head{
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .card h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-right: 2px;
+  }
+  .pill{
+    font-size: 0.68rem;
+    letter-spacing: 0.01em;
+    color: var(--ink-2);
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .card .links{
+    margin-left: auto;
+    display: flex;
+    gap: 14px;
+    white-space: nowrap;
+  }
+  .card .links a{
+    font-size: 0.82rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 1px;
+  }
+  .card .links a:hover{ border-color: var(--blue); }
+  .card p{ color: var(--ink-2); font-size: 0.94rem; }
+  .more{ margin-top: 22px; font-size: 0.92rem; }
+
+  /* ---------- ABOUT ---------- */
+  .prose{ max-width: 660px; }
+  .prose p{ margin-bottom: 16px; }
+  /* time runs right to left: newest at the left, so it reads most-recent-first */
+  .tlwrap{ position: relative; margin-top: 34px; }
+  .tlwrap::after{
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 10px;
+    width: 56px;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(255,255,255,0), var(--bg) 72%);
+    transition: opacity 0.2s ease;
+  }
+  .tlwrap.at-end::after{ opacity: 0; }
+  .tl{
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .tl-track{
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    min-width: min-content;
+  }
+  /* the axis itself */
+  .tl-track::before{
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 39px;
+    height: 1px;
+    background: var(--line-strong);
+  }
+  .tl-item{
+    position: relative;
+    flex: 0 0 294px;
+    padding-right: 26px;
+    scroll-snap-align: start;
+  }
+  .tl-item:last-child{ flex-basis: 320px; padding-right: 0; }
+  .tl-when{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+    height: 20px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+  .tl-dot{
+    position: relative;
+    z-index: 1;
+    width: 12px; height: 12px;
+    margin: 14px 0 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--line-strong);
+  }
+  .tl-item.now .tl-dot{ border-color: var(--blue); background: var(--blue); }
+  .tl-item h4{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .tl-item h4 em{
+    display: inline-block;
+    font-style: normal;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    background: var(--blue-soft);
+    border-radius: var(--radius);
+    padding: 2px 7px;
+    margin-left: 6px;
+    vertical-align: 2px;
+  }
+  .tl-item p{ color: var(--ink-2); font-size: 0.9rem; }
+  .tl-hint{
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: var(--ink-3);
+  }
+
+  /* ---------- SKILLS ---------- */
+  .group{ margin-bottom: 24px; }
+  .group:last-child{ margin-bottom: 0; }
+  .group .label{ margin-bottom: 10px; display: block; }
+  .chips{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip{
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 5px 12px;
+  }
+  .chip.key{
+    color: var(--blue);
+    border-color: #C3D7F7;
+    background: var(--blue-soft);
+  }
+
+  /* ---------- CONTACT ---------- */
+  footer{ padding: 56px 0 48px; border-top: 1px solid var(--line); }
+  footer h2{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-top: 8px;
+  }
+  footer p{ color: var(--ink-2); margin-top: 10px; max-width: 520px; }
+  .contact{ margin-top: 24px; display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+  .contact a{ font-size: 0.95rem; text-decoration: none; border-bottom: 1px solid var(--line-strong); padding-bottom: 2px; }
+  .contact a:hover{ border-color: var(--blue); }
+  .contact a.btn{
+    background: var(--navy);
+    color: #fff;
+    border: 1px solid var(--navy);
+    border-bottom-color: var(--navy);
+    border-radius: var(--radius);
+    padding: 10px 20px;
+  }
+  .contact a.btn:hover{ background: var(--navy-hi); border-color: var(--navy-hi); }
+  .colophon{ margin-top: 38px; font-size: 0.8rem; color: var(--ink-3); }
+
+  a:focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  @media (max-width: 860px){
+    /* keep the watermark clear of the headline once the text goes full width */
+    .radar{ top: auto; bottom: -56px; right: -84px; width: 290px; transform: none; opacity: 0.55; }
+    .radar .face{ display: none; }
+    .who img{ width: 88px; height: 88px; }
+    .cards{ grid-template-columns: 1fr; }
+    .stats{ gap: 16px 36px; }
+  }
+  @media (max-width: 560px){
+    .nav{ gap: 16px; }
+    .nav a{ font-size: 0.84rem; }
+    .nav a.about{ display: none; }
+
+    /* vertical space is the scarce resource on a phone */
+    .hero{ padding: 30px 0 42px; }
+    section{ padding: 42px 0; }
+    footer{ padding: 42px 0 36px; }
+    .head{ margin-bottom: 22px; }
+    .head h2, footer h2{ font-size: 1.4rem; }
+    .head p{ margin-top: 8px; }
+
+    .who{ gap: 13px; margin-bottom: 20px; }
+    .who img{ width: 72px; height: 72px; }
+    .lede{ margin-top: 14px; font-size: 1rem; }
+    .avail{ margin-top: 15px; }
+    .stats{
+      margin-top: 22px;
+      padding-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .stats b{ font-size: 1.2rem; }
+    .stats span{ font-size: 0.74rem; line-height: 1.35; display: block; }
+    /* radar tucks into the bottom corner behind the stats */
+    .radar{
+      top: auto; bottom: -74px; right: -78px;
+      width: 250px;
+      transform: none;
+      opacity: 0.5;
+    }
+
+    .prose p{ margin-bottom: 13px; }
+    .tlwrap{ margin-top: 26px; }
+    .tl-item{ padding-bottom: 22px; }
+    .card{ padding: 20px; }
+    .cards{ gap: 14px; }
+    .more{ margin-top: 18px; }
+    .group{ margin-bottom: 18px; }
+    .chip{ font-size: 0.8rem; padding: 4px 10px; }
+    .colophon{ margin-top: 28px; }
+    /* phones: a plain vertical list reads better than a one-card carousel */
+    .tl{ overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
+    .tl-track{ display: block; min-width: 0; }
+    .tl-track::before{ display: none; }
+    .tlwrap::after{ display: none; }
+    .tl-hint{ display: none; }
+    .tl-item{
+      flex: none;
+      padding: 0 0 26px 22px;
+      border-left: 1px solid var(--line-strong);
+    }
+    .tl-item:last-child{ border-left-color: transparent; padding-bottom: 0; }
+    .tl-when{ height: auto; line-height: 1.5; margin-bottom: 4px; }
+    .tl-dot{
+      position: absolute;
+      left: -6.5px; top: 6px;
+      margin: 0;
+    }
   }
 </style>
 </head>
 <body>
-<header>
+
+<header class="topbar">
   <div class="wrap">
-    <nav aria-label="Main">
-      <a class="name" href="#top">Nat Wong</a>
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#CFD9E5" stroke-width="3"/>
+        <path d="M32 14 L45 47 L32 39 L19 47 Z" fill="#1751C6"/>
+      </svg>
+      <b>Nat Wong</b>
+    </a>
+    <nav class="nav">
       <a href="#work">Work</a>
-      <a href="#about">About</a>
+      <a class="about" href="#about">About</a>
       <a href="#contact">Contact</a>
+      <a class="cta" href="Nathaniel_Wong_Resume.pdf" download>Resume</a>
     </nav>
   </div>
 </header>
 
-<main id="top" class="wrap">
-  <div class="hero">
-    <div>
-      <h1>I'm Nat, a former Singapore Air Force officer who builds hardware and software products.</h1>
-      <p>I'm an MBA student at Stanford, looking for a summer 2027 product internship in aerospace, drones and AI.</p>
-      <p>I started in air defense operations, then moved to the product side: writing the requirements, owning the budget, and shipping the systems the crews use.</p>
+<section class="hero" id="top">
+  <div class="wrap">
+   <div class="jumbo">
+    <div class="radar" aria-hidden="true">
+       <svg id="scope" viewBox="0 0 400 400">
+         <circle class="ring" cx="200" cy="200" r="60"/>
+         <circle class="ring" cx="200" cy="200" r="120"/>
+         <circle class="ring outer" cx="200" cy="200" r="180"/>
+         <line class="ring" x1="200" y1="14" x2="200" y2="386"/>
+         <line class="ring" x1="14" y1="200" x2="386" y2="200"/>
+         <circle cx="200" cy="200" r="3" fill="#1751C6"/>
+         <g id="tracks"></g>
+       </svg>
+       <div class="face"><img src="headshot.jpg" width="700" height="700" alt=""></div>
+     </div>
+    <div class="jumbo-main">
+     <div>
+      <div class="who">
+        <img src="headshot.jpg" width="700" height="700" alt="Nat Wong">
+        <div>
+          <div class="nm">Nat Wong</div>
+          <div class="rl">Product manager — aerospace, defense, and AI</div>
+        </div>
+      </div>
+
+      <h1>I build products for <span>systems that fly.</span></h1>
+      <p class="lede">Seven years in the Singapore Air Force — air-defense operations, then product management on a $40M technology portfolio. Most recently a go-to-market intern at Qeris, an early-stage AI drone startup. Computer engineer; now an MBA candidate at Stanford.</p>
+      <p class="avail"><i aria-hidden="true"></i>Seeking a summer 2027 product internship in aerospace, drones, and AI.</p>
+     </div>
+
     </div>
-    <img class="portrait" src="headshot.jpg" alt="Nat Wong">
+
+    <div class="stats">
+      <div><b>$40M</b><span>Portfolio managed</span></div>
+      <div><b>30+</b><span>Team led, 24/7 ops</span></div>
+      <div><b>80%</b><span>Paperwork cut by AI</span></div>
+    </div>
+   </div>
   </div>
+</section>
 
-  <section id="work">
-    <h2>Things I've built</h2>
-    <p class="sub">Side projects, each built start to finish.</p>
-
-    <div class="item">
-      <h3>sgraphs</h3>
-      <p>A charting tool for Singapore's open government data. It pulls live numbers from every agency that publishes them, so anyone can explore them.</p>
-      <p class="links"><span class="tag">React, data viz</span> · <a href="https://zuzivian.github.io/sgraphs/">Demo</a> <a href="https://github.com/zuzivian/sgraphs">Code</a></p>
+<section id="work">
+  <div class="wrap">
+    <div class="head">
+      <span class="label">Work</span>
+      <h2>Things I've built.</h2>
+      <p>Side projects, built end to end — drone and aviation tools, data tools, a multiplayer bot, computer vision, a browser game.</p>
     </div>
-    <div class="item">
-      <h3>sgBridgeBot</h3>
-      <p>A Telegram bot that runs a full game of floating bridge in a group chat. It deals, runs the bidding and keeps the turns in order, so nobody needs an app.</p>
-      <p class="links"><span class="tag">Python, Telegram API</span> · <a href="https://t.me/sgbridgebot">Play</a> <a href="https://github.com/zuzivian/sgbridgebot">Code</a></p>
+
+    <div class="cards">
+      <article class="card">
+        <div class="card-head">
+          <h3>Launch Map</h3>
+          <span class="pill">JavaScript</span>
+          <span class="pill">Geospatial</span>
+          <span class="links">
+            <a href="https://launch.natwong.dev" target="_blank" rel="noopener">Demo</a>
+            <a href="https://github.com/zuzivian/drone-rules" target="_blank" rel="noopener">Code</a>
+          </span>
+        </div>
+        <p>"Can I launch here?" A free, mobile map of drone rules across all nine Bay Area counties. Combines public-land ownership, FAA airspace grids and live flight restrictions, and every answer cites its source and last-verified date.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>Skyviu</h3>
+          <span class="pill">JavaScript</span>
+          <span class="pill">ADS-B</span>
+          <span class="links">
+            <a href="https://sky.natwong.dev" target="_blank" rel="noopener">Demo</a>
+            <a href="https://github.com/zuzivian/skyviu" target="_blank" rel="noopener">Code</a>
+          </span>
+        </div>
+        <p>The planes you can actually see from Stanford right now, from public ADS-B data. Point your phone at the sky and it names the aircraft overhead and tells you where to look.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>sgraphs</h3>
+          <span class="pill">React</span>
+          <span class="pill">Data viz</span>
+          <span class="links">
+            <a href="https://zuzivian.github.io/sgraphs/" target="_blank" rel="noopener">Demo</a>
+            <a href="https://github.com/zuzivian/sgraphs" target="_blank" rel="noopener">Code</a>
+          </span>
+        </div>
+        <p>Charting tool for Singapore's open government data. Pulls live series from data.gov.sg across every publishing agency and makes them explorable.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>sgBridgeBot</h3>
+          <span class="pill">Python</span>
+          <span class="pill">Telegram API</span>
+          <span class="links">
+            <a href="https://t.me/sgbridgebot" target="_blank" rel="noopener">Play</a>
+            <a href="https://github.com/zuzivian/sgbridgebot" target="_blank" rel="noopener">Code</a>
+          </span>
+        </div>
+        <p>A Telegram bot that runs complete games of floating bridge — a four-player card game — inside a group chat: dealing, bidding, and turn enforcement, no app needed.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>FaceAssure</h3>
+          <span class="pill">OpenCV</span>
+          <span class="pill">Hardware</span>
+          <span class="links">
+            <a href="https://hackaday.io/project/166037-faceassure-cloud-based-pan-tilt-security-camera" target="_blank" rel="noopener">Write-up</a>
+            <a href="https://github.com/zuzivian/eecs327-pan-tilt-camera" target="_blank" rel="noopener">Code</a>
+          </span>
+        </div>
+        <p>A cloud-connected security camera built with a classmate: pan-and-tilt hardware plus face tracking, so the camera follows a person across a room and flags anyone it doesn't recognize.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>Marble Trouble</h3>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Game design</span>
+          <span class="links">
+            <a href="https://zuzivian.github.io/marble-trouble/" target="_blank" rel="noopener">Play</a>
+            <a href="https://github.com/zuzivian/marble-trouble" target="_blank" rel="noopener">Code</a>
+          </span>
+        </div>
+        <p>A browser-based idle game set in a Tang-dynasty-inspired world, built on a custom rendering engine with no external game framework.</p>
+      </article>
     </div>
-    <div class="item">
-      <h3>FaceAssure</h3>
-      <p>A security camera I built with a classmate. It follows a person across a room and flags anyone it doesn't recognize.</p>
-      <p class="links"><span class="tag">OpenCV, hardware</span> · <a href="https://hackaday.io/project/166037-faceassure-cloud-based-pan-tilt-security-camera">Write-up</a> <a href="https://github.com/zuzivian/eecs327-pan-tilt-camera">Code</a></p>
+
+    <p class="more"><a href="https://github.com/zuzivian" target="_blank" rel="noopener">Everything else on GitHub &rarr;</a></p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head">
+      <span class="label">About</span>
+      <h2>How I got here.</h2>
     </div>
-    <div class="item">
-      <h3>Marble Trouble</h3>
-      <p>A browser idle game set in a Tang dynasty world, built on my own rendering engine.</p>
-      <p class="links"><span class="tag">TypeScript, game design</span> · <a href="https://zuzivian.github.io/marble-trouble/">Play</a> <a href="https://github.com/zuzivian/marble-trouble">Code</a></p>
+
+    <div class="prose">
+      <p>I build products for systems that have to work the first time. I started in air-defense operations, where the gap between a decision and its consequence is immediate, then moved to the other side of it — writing the requirements, owning the budget, and shipping the systems the operators actually use.</p>
+      <p>Most recently I worked on go-to-market at Qeris, an early-stage AI drone startup, validating use cases for its autonomous navigation technology with defense customers in Singapore. I'm now an MBA candidate at Stanford, looking for a summer 2027 product internship in aerospace, drones, and AI.</p>
     </div>
-    <p><a href="https://github.com/zuzivian">Everything else is on GitHub</a></p>
-  </section>
 
-  <section id="about">
-    <h2>How I got here</h2>
-    <p class="sub">Most recent first.</p>
+    <div class="tlwrap">
+      <div class="tl">
+        <div class="tl-track">
 
-        <ul class="timeline">
-      <li><span class="when">2026 to 2028</span><span><strong>Stanford Graduate School of Business.</strong> MBA student.</span></li>
-      <li><span class="when">Aug 2026</span><span><strong>Qeris, an AI drone startup.</strong> I worked on go-to-market as an intern. I talked with defense customers in Singapore and tested where the company's navigation technology fit.</span></li>
-      <li><span class="when">2023 to 2026</span><span><strong>Singapore Air Force, flight commander.</strong> I led a team of 30+ running air defense around the clock, and drove a two-year upgrade of our air defense system from operator needs to a live trial.</span></li>
-      <li><span class="when">2021 to 2023</span><span><strong>Ministry of Defence, capability development officer.</strong> I was a founding member of the digital defense service, and product owner for a system we took from mid-build to an on-time, on-budget launch.</span></li>
-      <li><span class="when">2019 to 2021</span><span><strong>Singapore Air Force, fire unit commander.</strong> I led a 12-person crew, and shipped an equipment-tracking web tool in one week.</span></li>
-      <li><span class="when">2015 to 2019</span><span><strong>Northwestern University.</strong> BS and MS in computer engineering, with a semester at ETH Zurich.</span></li>
-    </ul>
-  </section>
+          <article class="tl-item now">
+            <div class="tl-when">2026 &ndash; 2028</div>
+            <div class="tl-dot"></div>
+            <h4>Stanford Graduate School of Business</h4>
+            <p>MBA candidate.</p>
+          </article>
 
-  <section id="contact">
-    <h2>Say hello</h2>
-    <p class="sub">I'd love to talk about product internships in aerospace, drones and AI, or anything on this page.</p>
-    <p><a class="btn" href="https://www.linkedin.com/in/natmikewong">Message me on LinkedIn</a></p>
-  </section>
-</main>
+          <article class="tl-item">
+            <div class="tl-when">2026</div>
+            <div class="tl-dot"></div>
+            <h4>Qeris <em>AI drone startup</em></h4>
+            <p>Go-to-market intern at an early-stage autonomous-navigation startup. Ran customer discovery with defense organizations in Singapore, validated use cases for its terrain-navigation technology, and secured follow-up evaluations.</p>
+          </article>
 
-<footer>
-  <div class="wrap">Nat Wong, 2026</div>
+          <article class="tl-item">
+            <div class="tl-when">2023&ndash;26 &middot; 2019&ndash;21</div>
+            <div class="tl-dot"></div>
+            <h4>Singapore Air Force <em>Operations</em></h4>
+            <p>Fire unit commander, then flight commander. Led 24/7 air-defense operations with a team of 30+, meeting 100% of readiness requirements; the unit was named the Air Force's best ground-based air-defense unit in 2024 and 2026. Earlier, redesigned processes for a 12-person crew, cutting response times by more than 20%. Drove a two-year Aster 30 missile system upgrade from operator needs through user testing to an end-to-end operational trial, on time and within budget. Cut crew staffing 17% at full output, and cut paperwork 80% with AI-assisted digital workflows.</p>
+          </article>
+
+          <article class="tl-item">
+            <div class="tl-when">2021 &ndash; 2023</div>
+            <div class="tl-dot"></div>
+            <h4>Singapore Air Force <em>Product</em></h4>
+            <p>Founding capability development officer at the Air Force's digital and intelligence service. Defined requirements for an autonomous drone-swarm capability and won next-phase funding with a live demo to senior leadership. Product owner for an AI-enabled data tool for cyber research, taken over mid-build and shipped on time with full adoption in a month, cutting critical-incident response time 30%. Owned budget and roadmap for an eight-product, $40M portfolio and restructured a 50+ person department.</p>
+          </article>
+
+          <article class="tl-item">
+            <div class="tl-when">2015 &ndash; 2019</div>
+            <div class="tl-dot"></div>
+            <h4>Northwestern University</h4>
+            <p>B.S. and M.S. in Computer Engineering, magna cum laude, on a full Singapore Armed Forces scholarship. Departmental honors (Senior of the Year). Exchange semester at ETH Zürich.</p>
+          </article>
+
+        </div>
+      </div>
+      <p class="tl-hint">Most recent first — scroll right for earlier roles.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="head">
+      <span class="label">Skills</span>
+      <h2>What I bring.</h2>
+    </div>
+
+    <div class="group">
+      <span class="label">Product and leadership</span>
+      <div class="chips">
+        <span class="chip key">Product management</span>
+        <span class="chip key">Product ownership</span>
+        <span class="chip key">Go-to-market</span>
+        <span class="chip key">Cross-functional delivery</span>
+        <span class="chip key">Change management</span>
+        <span class="chip key">Team leadership (30+)</span>
+      </div>
+    </div>
+
+    <div class="group">
+      <span class="label">Domain</span>
+      <div class="chips">
+        <span class="chip">Aerospace and defense</span>
+        <span class="chip">Drones and autonomy</span>
+        <span class="chip">Air-defense operations</span>
+        <span class="chip">Capability development ($40M)</span>
+        <span class="chip">AI and workflow automation</span>
+      </div>
+    </div>
+
+    <div class="group">
+      <span class="label">Technical</span>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">React</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">C++</span>
+        <span class="chip">Java</span>
+        <span class="chip">HTML / CSS</span>
+        <span class="chip">VHDL / Verilog</span>
+        <span class="chip">Agile / Scrum</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="label">Contact</span>
+    <h2>Get in touch.</h2>
+    <p>Happy to talk about product internships in aerospace, drones, and AI — or about anything on this page.</p>
+    <div class="contact">
+      <a class="btn" href="https://www.linkedin.com/in/natmikewong" target="_blank" rel="noopener">Message me on LinkedIn</a>
+    </div>
+    <div class="colophon">Nat Wong &copy; 2026 · Built from scratch, on purpose.</div>
+  </div>
 </footer>
+
+<script>
+(function(){
+  var tl = document.querySelector('.tl');
+  var wrap = document.querySelector('.tlwrap');
+  if(tl && wrap){
+    var sync = function(){
+      var atEnd = tl.scrollLeft >= (tl.scrollWidth - tl.clientWidth - 2);
+      wrap.classList.toggle('at-end', atEnd);
+    };
+    tl.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
+})();
+
+(function(){
+  var svg = document.getElementById('scope');
+  var group = document.getElementById('tracks');
+  if(!svg || !group) return;
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var C = 200, R = 186;
+  var N = window.matchMedia('(max-width: 560px)').matches ? 3 : 5;
+  var AMBER = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || '#D98A00';
+  var IDS = ['AC-214','AC-071','AC-336','AC-108','AC-492','AC-155','AC-023','AC-287'];
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Each contact flies a straight chord between two independent points on the scope
+  // boundary, so the paths fan out naturally instead of all crossing the centre.
+  function makeTrack(id, seed){
+    var minSep = 0.6, maxSep = Math.PI*2 - 0.6;
+    var a1 = Math.random()*Math.PI*2;
+    var a2 = a1 + minSep + Math.random()*(maxSep - minSep);
+    var p0 = [C + R*Math.cos(a1), C + R*Math.sin(a1)];
+    var p1 = [C + R*Math.cos(a2), C + R*Math.sin(a2)];
+    var dist = Math.hypot(p1[0]-p0[0], p1[1]-p0[1]);
+    var dur = dist / (0.012 + Math.random()*0.01);   // px per ms — slow, readable drift
+    return { p0:p0, p1:p1, dur:dur, id:id, offset: seed*dur };
+  }
+
+  var tracks = [];
+  for(var i=0;i<N;i++) tracks.push(makeTrack(IDS[i % IDS.length], Math.random()));
+
+  var TRAIL = 4;
+  var state = tracks.map(function(t){
+    var g = document.createElementNS(NS,'g');
+    var trail = [];
+    for(var i=TRAIL-1;i>=0;i--){
+      var r = document.createElementNS(NS,'rect');
+      var w = 3 + i*0.6;
+      r.setAttribute('width', w);
+      r.setAttribute('height', w);
+      r.setAttribute('fill', AMBER);
+      r.setAttribute('opacity', (0.1 + 0.22*(TRAIL-1-i)).toFixed(2));
+      g.appendChild(r);
+      trail.unshift({ el:r, w:w });
+    }
+    var head = document.createElementNS(NS,'rect');
+    head.setAttribute('width', 6); head.setAttribute('height', 6);
+    head.setAttribute('fill', AMBER);
+    g.appendChild(head);
+
+    var label = document.createElementNS(NS,'text');
+    label.setAttribute('font-family','IBM Plex Mono, monospace');
+    label.setAttribute('font-size','8');
+    label.setAttribute('fill','#A8782F');
+    label.textContent = t.id;
+    g.appendChild(label);
+
+    group.appendChild(g);
+    return { t:t, g:g, trail:trail, head:head, label:label };
+  });
+
+  function at(t, f){
+    return [ t.p0[0] + (t.p1[0]-t.p0[0])*f, t.p0[1] + (t.p1[1]-t.p0[1])*f ];
+  }
+  function put(el, p, w){
+    el.setAttribute('x', p[0] - w/2);
+    el.setAttribute('y', p[1] - w/2);
+  }
+
+  function render(elapsed){
+    state.forEach(function(s){
+      var f = (((elapsed + s.t.offset) % s.t.dur) / s.t.dur);
+      var p = at(s.t, f);
+      put(s.head, p, 6);
+      // trail samples sit a fixed fraction behind the head along the same path
+      s.trail.forEach(function(seg, i){
+        var lag = 0.022 * (i+1);
+        var tf = f - lag;
+        if(tf < 0){ seg.el.setAttribute('opacity','0'); return; }
+        seg.el.setAttribute('opacity', (0.32 - i*0.07).toFixed(2));
+        put(seg.el, at(s.t, tf), seg.w);
+      });
+      s.label.setAttribute('x', p[0] + 9);
+      s.label.setAttribute('y', p[1] - 5);
+      // fade in and out at the edges of the scope
+      var edge = Math.min(f, 1-f);
+      s.g.setAttribute('opacity', edge < 0.06 ? (edge/0.06).toFixed(2) : '1');
+    });
+  }
+
+  if(reduce){ render(0); return; }
+
+  // Animate only while the scope is on screen and the tab is visible.
+  var start = null, shift = 0, last = 0, running = false, onscreen = true;
+  function frame(now){
+    if(!running) return;
+    if(start === null) start = now;
+    last = now - start - shift;
+    render(last);
+    requestAnimationFrame(frame);
+  }
+  function sync(){
+    var want = onscreen && !document.hidden;
+    if(want === running) return;
+    running = want;
+    if(running){
+      // resume from where the animation stopped rather than jumping ahead
+      start = null;
+      var resumeAt = last;
+      requestAnimationFrame(function(now){
+        start = now - resumeAt; shift = 0;
+        frame(now);
+      });
+    }
+  }
+  document.addEventListener('visibilitychange', sync);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){ onscreen = e[0].isIntersecting; sync(); }).observe(svg);
+  }
+  sync();
+})();
+</script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
