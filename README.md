@@ -21,7 +21,7 @@ Heading into Stanford GSB recruiting, I needed a personal portfolio site that ga
 
 - **Blog / writing section** — deferred. No content plan yet; adding an empty section would signal neglect rather than depth. Revisit once there's actual writing to publish.
 - **Case studies / project write-ups** — deferred, intentionally. The original build-log placeholder was removed in the portfolio-first redesign; the Work section now lists four real side projects. Case studies wait until there is a project worth the write-up.
-- **Employer-detail pages** — Qeris and defense work stay deliberately vague on the site (role, theme, no counts of customers or agencies); detail lives on LinkedIn and the resume, which is shared on request.
+- **Employer-detail pages** — Qeris and defense work stay deliberately vague on the site (role, theme, no counts of customers or agencies); detail lives on the resume, which is shared on request or via the download link.
 - **Multi-page architecture** — explicitly deferred in favor of a single scrollable page. Revisit if the blog or case-study sections mature enough to need dedicated pages.
 
 ## User Stories
@@ -52,18 +52,17 @@ Heading into Stanford GSB recruiting, I needed a personal portfolio site that ga
 - [x] Open Graph / Twitter card metadata; the share image was regenerated in Oct 2026 to match the current light theme and positioning ("I build products for systems that fly")
 - [x] Favicon
 - [x] Portfolio-first redesign with plain-English positioning, circular headshot in the radar scope, Work section, tiered Skills section
-- [x] Contact via LinkedIn only to cut down on spam. Resume download removed 2026-10-21 (Nat's call); the PDF is no longer on the site
+- [x] Resume download (PDF in the repo root; the NVIDIA PM version as of 2026-10-18), contact via LinkedIn only to cut down on spam
 - [x] Technical hygiene (Oct 2026): self-hosted fonts (no render-blocking Google Fonts request), canonical URL, JSON-LD `Person` schema, `robots.txt`, `sitemap.xml`, radar animation paused when off screen or tab hidden and reduced to three contacts on phones, Vercel Web Analytics
 
 ### Future Considerations (P2) — explicitly not built, but designed not to block
 - [ ] Blog/writing section — page structure should accommodate this without a full rebuild
 - [ ] Case studies for build projects, once they exist
-
+- [ ] Role-specific resume variants (the site links one PDF; swap the file when targeting a different role)
 
 ## Changelog
 
 - **2026-10-18** — Synced copy to the current resume ($40M portfolio, Qeris as a go-to-market internship, Air Force role dates and outcomes). Availability line now states the target: summer 2027 product internship in aerospace, drones, and AI. Added the technical hygiene items above. Regenerated the Open Graph image.
-- **2026-10-21** — Restyled to a plainer look (white, navy ink, one blue accent, Fraunces and Inter), copy trimmed to Nat's voice, still-radar and stat strip removed, resume download removed. Page is still one `index.html`; the self-hosted font files in `fonts/` are no longer used.
 
 ## Success Metrics
 
