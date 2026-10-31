@@ -52,13 +52,12 @@ Heading into Stanford GSB recruiting, I needed a personal portfolio site that ga
 - [x] Open Graph / Twitter card metadata; the share image was regenerated in Oct 2026 to match the current light theme and positioning ("I build products for systems that fly")
 - [x] Favicon
 - [x] Portfolio-first redesign with plain-English positioning, circular headshot in the radar scope, Work section, tiered Skills section
-- [x] Contact via LinkedIn only to cut down on spam; resume shared on request (header download button removed 2026-10-31)
+- [x] Contact via LinkedIn only to cut down on spam; resume shared on request (download button and PDF removed 2026-10-31)
 - [x] Technical hygiene (Oct 2026): self-hosted fonts (no render-blocking Google Fonts request), canonical URL, JSON-LD `Person` schema, `robots.txt`, `sitemap.xml`, radar animation paused when off screen or tab hidden and reduced to three contacts on phones, Vercel Web Analytics
 
 ### Future Considerations (P2) — explicitly not built, but designed not to block
 - [ ] Blog/writing section — page structure should accommodate this without a full rebuild
 - [ ] Case studies for build projects, once they exist
-- [ ] Role-specific resume variants (the site links one PDF; swap the file when targeting a different role)
 
 ## Changelog
 
@@ -75,7 +74,7 @@ Heading into Stanford GSB recruiting, I needed a personal portfolio site that ga
 - Whether the site becomes a genuine differentiator in networking conversations (anecdotal — track whether contacts mention it unprompted)
 - Whether it gets referenced positively during actual PM recruiting conversations
 
-*Note: this is a personal portfolio, not a product with users at scale. v1 shipped with no analytics, deliberately. In Oct 2026 cookieless Vercel Web Analytics was added (it must be enabled in the Vercel project dashboard to record) so resume downloads and traffic sources can inform the summer 2027 internship search; no cookies, no cross-site tracking.*
+*Note: this is a personal portfolio, not a product with users at scale. v1 shipped with no analytics, deliberately. In Oct 2026 cookieless Vercel Web Analytics was added (it must be enabled in the Vercel project dashboard to record) so traffic sources can inform the summer 2027 internship search; no cookies, no cross-site tracking.*
 
 ## Open Questions
 
