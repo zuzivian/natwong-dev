@@ -42,7 +42,7 @@
 
     --ink: #0F1E2E;
     --ink-2: #4A5C70;
-    --ink-3: #8294A8;
+    --ink-3: #5E7287;  /* 4.96:1 on white — AA for small text */
 
     --blue: #1751C6;
     --blue-soft: #EDF3FD;
@@ -365,13 +365,13 @@
     border: 2px solid var(--line-strong);
   }
   .tl-item.now .tl-dot{ border-color: var(--blue); background: var(--blue); }
-  .tl-item h4{
+  .tl-item h3{
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 8px;
   }
-  .tl-item h4 em{
+  .tl-item h3 em{
     display: inline-block;
     font-style: normal;
     font-family: 'IBM Plex Mono', monospace;
@@ -433,7 +433,13 @@
   .contact a.btn:hover{ background: var(--navy-hi); border-color: var(--navy-hi); }
   .colophon{ margin-top: 38px; font-size: 0.8rem; color: var(--ink-3); }
 
-  a:focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+  a:focus-visible, .tl:focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+  .skip{
+    position: absolute; left: 12px; top: -48px; z-index: 50;
+    background: var(--navy); color: #fff; text-decoration: none;
+    border-radius: var(--radius); padding: 8px 14px; font-size: 0.9rem;
+  }
+  .skip:focus{ top: 12px; }
 
   @media (max-width: 860px){
     /* keep the watermark clear of the headline once the text goes full width */
@@ -509,6 +515,8 @@
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#top">
@@ -526,6 +534,8 @@
   </div>
 </header>
 
+<main id="main">
+
 <section class="hero" id="top">
   <div class="wrap">
    <div class="jumbo">
@@ -539,12 +549,12 @@
          <circle cx="200" cy="200" r="3" fill="#1751C6"/>
          <g id="tracks"></g>
        </svg>
-       <div class="face"><img src="headshot.jpg" width="700" height="700" alt=""></div>
+       <div class="face"><img src="headshot-400.jpg" width="400" height="400" alt=""></div>
      </div>
     <div class="jumbo-main">
      <div>
       <div class="who">
-        <img src="headshot.jpg" width="700" height="700" alt="Nat Wong">
+        <img src="headshot-400.jpg" width="400" height="400" alt="Nat Wong">
         <div>
           <div class="nm">Nat Wong</div>
           <div class="rl">Product manager — aerospace, defense, and AI</div>
@@ -672,41 +682,41 @@
     </div>
 
     <div class="tlwrap">
-      <div class="tl">
+      <div class="tl" role="region" aria-label="Career timeline">
         <div class="tl-track">
 
           <article class="tl-item now">
             <div class="tl-when">2026 &ndash; 2028</div>
             <div class="tl-dot"></div>
-            <h4>Stanford Graduate School of Business</h4>
+            <h3>Stanford Graduate School of Business</h3>
             <p>MBA candidate.</p>
           </article>
 
           <article class="tl-item">
             <div class="tl-when">2026</div>
             <div class="tl-dot"></div>
-            <h4>Qeris <em>AI drone startup</em></h4>
+            <h3>Qeris <em>AI drone startup</em></h3>
             <p>Go-to-market intern at an early-stage autonomous-navigation startup. Ran customer discovery with defense organizations in Singapore, validated use cases for its terrain-navigation technology, and secured follow-up evaluations.</p>
           </article>
 
           <article class="tl-item">
             <div class="tl-when">2023&ndash;26 &middot; 2019&ndash;21</div>
             <div class="tl-dot"></div>
-            <h4>Singapore Air Force <em>Operations</em></h4>
+            <h3>Singapore Air Force <em>Operations</em></h3>
             <p>Fire unit commander, then flight commander. Led 24/7 air-defense operations with a team of 30+, meeting 100% of readiness requirements; the unit was named the Air Force's best ground-based air-defense unit in 2024 and 2026. Earlier, redesigned processes for a 12-person crew, cutting response times by more than 20%. Drove a two-year Aster 30 missile system upgrade from operator needs through user testing to an end-to-end operational trial, on time and within budget. Cut crew staffing 17% at full output, and cut paperwork 80% with AI-assisted digital workflows.</p>
           </article>
 
           <article class="tl-item">
             <div class="tl-when">2021 &ndash; 2023</div>
             <div class="tl-dot"></div>
-            <h4>Singapore Air Force <em>Product</em></h4>
+            <h3>Singapore Air Force <em>Product</em></h3>
             <p>Founding capability development officer at the Air Force's digital and intelligence service. Defined requirements for an autonomous drone-swarm capability and won next-phase funding with a live demo to senior leadership. Product owner for an AI-enabled data tool for cyber research, taken over mid-build and shipped on time with full adoption in a month, cutting critical-incident response time 30%. Owned budget and roadmap for an eight-product, $40M portfolio and restructured a 50+ person department.</p>
           </article>
 
           <article class="tl-item">
             <div class="tl-when">2015 &ndash; 2019</div>
             <div class="tl-dot"></div>
-            <h4>Northwestern University</h4>
+            <h3>Northwestern University</h3>
             <p>B.S. and M.S. in Computer Engineering, magna cum laude, on a full Singapore Armed Forces scholarship. Departmental honors (Senior of the Year). Exchange semester at ETH Zürich.</p>
           </article>
 
@@ -764,6 +774,8 @@
   </div>
 </section>
 
+</main>
+
 <footer id="contact">
   <div class="wrap">
     <span class="label">Contact</span>
@@ -784,6 +796,8 @@
     var sync = function(){
       var atEnd = tl.scrollLeft >= (tl.scrollWidth - tl.clientWidth - 2);
       wrap.classList.toggle('at-end', atEnd);
+      // focusable only while it actually scrolls, so keyboard users can reach the earlier roles
+      if(tl.scrollWidth > tl.clientWidth) tl.setAttribute('tabindex','0'); else tl.removeAttribute('tabindex');
     };
     tl.addEventListener('scroll', sync, { passive: true });
     window.addEventListener('resize', sync);
