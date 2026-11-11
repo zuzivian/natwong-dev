@@ -303,6 +303,41 @@
   .card p{ color: var(--ink-2); font-size: 0.94rem; }
   .more{ margin-top: 22px; font-size: 0.92rem; }
 
+  /* ---------- PROJECTS (case studies) ---------- */
+  .cases{ display: grid; gap: 18px; }
+  .case{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    scroll-margin-top: calc(var(--bar-h) + 16px);
+  }
+  .case .card-head{ margin-bottom: 14px; }
+  .case h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-right: 2px;
+  }
+  .case .links{ margin-left: auto; display: flex; gap: 14px; white-space: nowrap; }
+  .case .links a{
+    font-size: 0.82rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 1px;
+  }
+  .case .links a:hover{ border-color: var(--blue); }
+  .case dl{
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px 20px;
+    max-width: 760px;
+  }
+  .case dt{ padding-top: 4px; }
+  .case dd{ color: var(--ink-2); font-size: 0.94rem; }
+  .case dd ul{ padding-left: 18px; }
+  .case dd li{ margin-bottom: 4px; }
+  .case dd li:last-child{ margin-bottom: 0; }
+
   /* ---------- ABOUT ---------- */
   .prose{ max-width: 660px; }
   .prose p{ margin-bottom: 16px; }
@@ -496,6 +531,10 @@
     .tlwrap{ margin-top: 26px; }
     .tl-item{ padding-bottom: 22px; }
     .card{ padding: 20px; }
+    .case{ padding: 20px; }
+    .case dl{ grid-template-columns: 1fr; gap: 4px; }
+    .case dd{ margin-bottom: 10px; }
+    .case dd:last-child{ margin-bottom: 0; }
     .cards{ gap: 14px; }
     .more{ margin-top: 18px; }
     .group{ margin-bottom: 18px; }
@@ -537,6 +576,7 @@
     </a>
     <nav class="nav">
       <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
       <a class="about" href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -675,6 +715,112 @@
     </div>
 
     <p class="more"><a href="https://github.com/zuzivian" target="_blank" rel="noopener">Everything else on GitHub &rarr;<span class="sr-only"> (opens in a new tab)</span></a></p>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="head">
+      <span class="label">Projects</span>
+      <h2>Case studies.</h2>
+      <p>The problem, the product calls I made, and what each one shows.</p>
+    </div>
+
+    <div class="cases">
+      <article class="case" id="ad-constellation">
+        <div class="card-head">
+          <h3>Aerospace &amp; Defense Constellation</h3>
+          <span class="pill">Co-built with Lucas</span>
+          <!-- Link is a decision for Nat: the site is an unlisted, noindex draft. Delete this span to drop it. -->
+          <span class="links">
+            <a href="https://ad-constellation.vercel.app" target="_blank" rel="noopener">Demo<span class="sr-only"> (opens in a new tab)</span></a>
+          </span>
+        </div>
+        <dl>
+          <dt class="label">Problem</dt>
+          <dd>Stanford business school first-years want defense tech but can name four companies. Alumni search only works if you already know the employer.</dd>
+          <dt class="label">What we built</dt>
+          <dd>Two views over one dataset, each answering one question. A 3D constellation, with nine capability clusters as gravity wells, answers "who else works on this problem?" A value chain, from raw materials to fielded capability, answers "where are the gaps?"</dd>
+          <dt class="label">Decisions</dt>
+          <dd>
+            <ul>
+              <li>A graph, not a list: the ecosystem is capabilities linked to organizations, and nobody publishes it that way.</li>
+              <li>Every row and every investor or buyer link needs a source URL. Unverified links are left out, not guessed.</li>
+              <li>Facts and analyst judgement are labeled separately in the interface. Supply risk is scored on two axes, because one import-reliance number would rate a single-plant input as safe.</li>
+              <li>Cut a filter that colored nine of ten segments the same. A lens that does not differentiate is decoration.</li>
+            </ul>
+          </dd>
+          <dt class="label">What it shows</dt>
+          <dd>Scoping to one user and one moment of value, and keeping a decision log. The success test is qualitative: a user finds a company they would email and had never heard of.</dd>
+        </dl>
+      </article>
+
+      <article class="case" id="autopilot">
+        <div class="card-head">
+          <h3>Autopilot: a fleet of AI agents</h3>
+          <span class="pill">Orchestration</span>
+        </div>
+        <dl>
+          <dt class="label">Problem</dt>
+          <dd>One person, more work than hours, and several AI agents that each do some jobs well. Without routing and guardrails they duplicate work or act without approval.</dd>
+          <dt class="label">What I built</dt>
+          <dd>An operating model for five agents (coding agents and assistants) run by a supervisor. Work moves as requests on a shared queue. Each task is claimed, done on its own branch or thread, and handed back in a fixed format.</dd>
+          <dt class="label">Decisions</dt>
+          <dd>
+            <ul>
+              <li>Route each task to the agent best suited to it, and never let two agents touch the same files.</li>
+              <li>Guardrails set by role: purchase authority, an email allowlist, no merges by agents.</li>
+              <li>I approve from a phone dashboard. Agents propose; a person decides.</li>
+              <li>Track utilization and usage across plans, so capacity is measured, not guessed.</li>
+            </ul>
+          </dd>
+          <dt class="label">What it shows</dt>
+          <dd>This site is one of its workstreams: agents open draft pull requests, an automated check gates them, and I review and merge.</dd>
+        </dl>
+      </article>
+
+      <article class="case" id="skyviu">
+        <div class="card-head">
+          <h3>Skyviu</h3>
+          <span class="pill">ADS-B</span>
+          <span class="links">
+            <a href="https://sky.natwong.dev" target="_blank" rel="noopener">Demo<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/skyviu" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
+          </span>
+        </div>
+        <dl>
+          <dt class="label">Problem</dt>
+          <dd>Flight trackers show every aircraft in range. They don't tell you which plane you can actually see, or where to look.</dd>
+          <dt class="label">What I built</dt>
+          <dd>A one-page web app that judges which planes are visible from where you stand, lists the next ones to come into view, and names the plane you point your phone camera at.</dd>
+          <dt class="label">Decisions</dt>
+          <dd>
+            <ul>
+              <li>Privacy by default: the data proxy rounds your location to about 1 km before it asks for aircraft.</li>
+              <li>Shareable links name a place and a plane, so a sighting can be sent to someone.</li>
+              <li>One page, no build step, with automated smoke tests on every change.</li>
+            </ul>
+          </dd>
+          <dt class="label">What it shows</dt>
+          <dd>Turning a raw public data feed into one answer a person can act on.</dd>
+        </dl>
+      </article>
+
+      <article class="case" id="techweek">
+        <div class="card-head">
+          <h3>SF Tech Week booth navigator</h3>
+          <span class="links">
+            <a href="https://techweek.natwong.dev" target="_blank" rel="noopener">Demo<span class="sr-only"> (opens in a new tab)</span></a>
+          </span>
+        </div>
+        <dl>
+          <dt class="label">Problem</dt>
+          <dd>A career fair or tech week has too many booths to see in the time you have.</dd>
+          <dt class="label">What I built</dt>
+          <dd>A web app for finding your way through the booths.</dd>
+        </dl>
+      </article>
+    </div>
   </div>
 </section>
 
