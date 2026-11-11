@@ -7,12 +7,16 @@ Exits non-zero and lists every failure. Covers build health (every local
 reference resolves, JSON-LD and vercel.json parse), SEO hygiene (title,
 description, canonical, OG image, sitemap) and an accessibility floor (lang,
 alt text, heading order, one h1, main landmark, safe target=_blank).
+It also checks that every sitemap <lastmod> is a valid, non-future YYYY-MM-DD
+date and that the og:image PNG's real dimensions match og:image:width/height.
 It also enforces that /resume.pdf is never linked from the site.
 """
 import json
 import os
 import re
+import struct
 import sys
+from datetime import date
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from urllib.parse import urlparse
@@ -102,6 +106,24 @@ def check_html():
     if canon != [SITE + "/"]:
         fail(f"index.html: canonical should be exactly {SITE}/ (got {canon})")
 
+    # og:image really is the size the og:image:width/height meta tags promise
+    og_path = local_path(metas.get("og:image"))
+    if og_path and os.path.isfile(os.path.join(ROOT, og_path)):
+        with open(os.path.join(ROOT, og_path), "rb") as f:
+            head = f.read(24)
+        if head[:8] != b"\x89PNG\r\n\x1a\n" or head[12:16] != b"IHDR":
+            fail(f"{og_path}: og:image is not a valid PNG")
+        else:
+            actual = struct.unpack(">II", head[16:24])
+            try:
+                promised = (int(metas.get("og:image:width")), int(metas.get("og:image:height")))
+            except (TypeError, ValueError):
+                fail("index.html: og:image:width / og:image:height missing or not integers")
+            else:
+                if actual != promised:
+                    fail(f"{og_path}: is {actual[0]}x{actual[1]} but og:image:width/height say "
+                         f"{promised[0]}x{promised[1]}")
+
     # every local reference resolves to a file in the repo
     refs = []
     for t, a, line in p.tags:
@@ -170,6 +192,17 @@ def check_files():
             path = local_path(loc.text.strip())
             if path and not os.path.isfile(os.path.join(ROOT, path)):
                 fail(f"sitemap.xml: {loc.text} does not exist in the repo")
+        for lm in tree.getroot().iterfind("s:url/s:lastmod", ns):
+            text = (lm.text or "").strip()
+            try:
+                if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", text):
+                    raise ValueError
+                day = date.fromisoformat(text)
+            except ValueError:
+                fail(f"sitemap.xml: lastmod {text!r} is not a valid YYYY-MM-DD date")
+                continue
+            if day > date.today():
+                fail(f"sitemap.xml: lastmod {text} is in the future")
     except ET.ParseError as e:
         fail(f"sitemap.xml: does not parse: {e}")
 
