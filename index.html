@@ -436,6 +436,10 @@
   .colophon{ margin-top: 38px; font-size: 0.8rem; color: var(--ink-3); }
 
   a:focus-visible, .tl:focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+  .sr-only{
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
   @media (prefers-reduced-motion: reduce){
     .card, .tlwrap::after{ transition: none; }
   }
@@ -597,8 +601,8 @@
           <span class="pill">JavaScript</span>
           <span class="pill">Geospatial</span>
           <span class="links">
-            <a href="https://launch.natwong.dev" target="_blank" rel="noopener">Demo</a>
-            <a href="https://github.com/zuzivian/drone-rules" target="_blank" rel="noopener">Code</a>
+            <a href="https://launch.natwong.dev" target="_blank" rel="noopener">Demo<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/drone-rules" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
           </span>
         </div>
         <p>"Can I launch here?" A free, mobile map of drone rules across all nine Bay Area counties. Combines public-land ownership, FAA airspace grids and live flight restrictions, and every answer cites its source and last-verified date.</p>
@@ -610,8 +614,8 @@
           <span class="pill">JavaScript</span>
           <span class="pill">ADS-B</span>
           <span class="links">
-            <a href="https://sky.natwong.dev" target="_blank" rel="noopener">Demo</a>
-            <a href="https://github.com/zuzivian/skyviu" target="_blank" rel="noopener">Code</a>
+            <a href="https://sky.natwong.dev" target="_blank" rel="noopener">Demo<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/skyviu" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
           </span>
         </div>
         <p>The planes you can actually see from Stanford right now, from public ADS-B data. Point your phone at the sky and it names the aircraft overhead and tells you where to look.</p>
@@ -623,8 +627,8 @@
           <span class="pill">React</span>
           <span class="pill">Data viz</span>
           <span class="links">
-            <a href="https://zuzivian.github.io/sgraphs/" target="_blank" rel="noopener">Demo</a>
-            <a href="https://github.com/zuzivian/sgraphs" target="_blank" rel="noopener">Code</a>
+            <a href="https://zuzivian.github.io/sgraphs/" target="_blank" rel="noopener">Demo<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/sgraphs" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
           </span>
         </div>
         <p>Charting tool for Singapore's open government data. Pulls live series from data.gov.sg across every publishing agency and makes them explorable.</p>
@@ -636,8 +640,8 @@
           <span class="pill">Python</span>
           <span class="pill">Telegram API</span>
           <span class="links">
-            <a href="https://t.me/sgbridgebot" target="_blank" rel="noopener">Play</a>
-            <a href="https://github.com/zuzivian/sgbridgebot" target="_blank" rel="noopener">Code</a>
+            <a href="https://t.me/sgbridgebot" target="_blank" rel="noopener">Play<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/sgbridgebot" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
           </span>
         </div>
         <p>A Telegram bot that runs complete games of floating bridge — a four-player card game — inside a group chat: dealing, bidding, and turn enforcement, no app needed.</p>
@@ -649,8 +653,8 @@
           <span class="pill">OpenCV</span>
           <span class="pill">Hardware</span>
           <span class="links">
-            <a href="https://hackaday.io/project/166037-faceassure-cloud-based-pan-tilt-security-camera" target="_blank" rel="noopener">Write-up</a>
-            <a href="https://github.com/zuzivian/eecs327-pan-tilt-camera" target="_blank" rel="noopener">Code</a>
+            <a href="https://hackaday.io/project/166037-faceassure-cloud-based-pan-tilt-security-camera" target="_blank" rel="noopener">Write-up<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/eecs327-pan-tilt-camera" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
           </span>
         </div>
         <p>A cloud-connected security camera built with a classmate: pan-and-tilt hardware plus face tracking, so the camera follows a person across a room and flags anyone it doesn't recognize.</p>
@@ -662,15 +666,15 @@
           <span class="pill">TypeScript</span>
           <span class="pill">Game design</span>
           <span class="links">
-            <a href="https://zuzivian.github.io/marble-trouble/" target="_blank" rel="noopener">Play</a>
-            <a href="https://github.com/zuzivian/marble-trouble" target="_blank" rel="noopener">Code</a>
+            <a href="https://zuzivian.github.io/marble-trouble/" target="_blank" rel="noopener">Play<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/zuzivian/marble-trouble" target="_blank" rel="noopener">Code<span class="sr-only"> (opens in a new tab)</span></a>
           </span>
         </div>
         <p>A browser-based idle game set in a Tang-dynasty-inspired world, built on a custom rendering engine with no external game framework.</p>
       </article>
     </div>
 
-    <p class="more"><a href="https://github.com/zuzivian" target="_blank" rel="noopener">Everything else on GitHub &rarr;</a></p>
+    <p class="more"><a href="https://github.com/zuzivian" target="_blank" rel="noopener">Everything else on GitHub &rarr;<span class="sr-only"> (opens in a new tab)</span></a></p>
   </div>
 </section>
 
@@ -787,7 +791,7 @@
     <h2>Get in touch.</h2>
     <p>Happy to talk about product internships in aerospace, drones, and AI — or about anything on this page.</p>
     <div class="contact">
-      <a class="btn" href="https://www.linkedin.com/in/natmikewong" target="_blank" rel="noopener">Message me on LinkedIn</a>
+      <a class="btn" href="https://www.linkedin.com/in/natmikewong" target="_blank" rel="noopener">Message me on LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
     </div>
     <div class="colophon">Nat Wong &copy; 2026 · Built from scratch, on purpose.</div>
   </div>
