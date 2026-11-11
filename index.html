@@ -57,7 +57,9 @@
     --maxw: 940px;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
-  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: no-preference){
+    html{ scroll-behavior: smooth; }
+  }
   body{
     background-color: var(--bg);
     /* barely-there dot field — texture, not pattern */
@@ -434,6 +436,9 @@
   .colophon{ margin-top: 38px; font-size: 0.8rem; color: var(--ink-3); }
 
   a:focus-visible, .tl:focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce){
+    .card, .tlwrap::after{ transition: none; }
+  }
   .skip{
     position: absolute; left: 12px; top: -48px; z-index: 50;
     background: var(--navy); color: #fff; text-decoration: none;
