@@ -15,6 +15,9 @@ matches og:image, and optional Twitter titles/descriptions match Open Graph.
 It also enforces that /resume.pdf is never linked from the site.
 Local references use exact HTTP(S) site matching and decoded URL paths.
 Sitemap URLs must use https://natwong.dev/ and include that exact homepage URL.
+Loaded subresources must be same-site or data: URLs (/_vercel/ is allowed).
+Byte budgets cover HTML, loaded images/fonts, and the deduplicated page total;
+share metadata, JSON-LD and ordinary hyperlinks do not count as loaded assets.
 """
 import json
 import os
@@ -24,10 +27,14 @@ import sys
 from datetime import date
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
-from urllib.parse import unquote, urlparse
+from urllib.parse import unquote, urljoin, urlparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://natwong.dev"
+MAX_HTML_BYTES = 60_000  # Today's index.html: 42,860 bytes.
+MAX_IMAGE_BYTES = 120_000  # Today's loaded image: 29,498 bytes.
+MAX_FONT_BYTES = 60_000  # Today's largest font: 45,712 bytes.
+MAX_TOTAL_BYTES = 250_000  # Today's HTML plus unique loaded assets: 169,954 bytes.
 errors = []
 
 
@@ -42,6 +49,8 @@ class Page(HTMLParser):
         self.headings = []  # (level, line)
         self.ids = set()
         self.jsonld = []
+        self.styles = []
+        self._in_style = False
         self._in_jsonld = False
         self._title = None
         self.title = ""
@@ -53,6 +62,11 @@ class Page(HTMLParser):
         a = dict(attrs)
         line = self.getpos()[0]
         self.tags.append((tag, a, line))
+        if a.get("style"):
+            self.styles.append(a["style"])
+        if tag == "style":
+            self._in_style = True
+            self.styles.append("")
         if tag == "a" and a.get("target") == "_blank":
             self._blank_line = line
             self._link_hint = False
@@ -76,6 +90,8 @@ class Page(HTMLParser):
             self._title = ""
 
     def handle_endtag(self, tag):
+        if tag == "style":
+            self._in_style = False
         if self._blank_line is not None:
             # Keep descendant text together even when inline tags split the hint.
             for i in range(len(self._link_elements) - 1, -1, -1):
@@ -96,6 +112,8 @@ class Page(HTMLParser):
             self.title, self._title = self._title.strip(), None
 
     def handle_data(self, data):
+        if self._in_style:
+            self.styles[-1] += data
         for _, chunks in self._link_elements:
             if chunks is not None:
                 chunks.append(data)
@@ -118,6 +136,103 @@ def local_path(ref):
     if path.startswith("_vercel/"):  # injected by Vercel at deploy time
         return None
     return path or "index.html"
+
+
+def srcset_urls(value):
+    """Read candidate URLs, preserving commas inside data: URLs."""
+    remaining = value or ""
+    while remaining:
+        remaining = remaining.lstrip(" \t\n\r\f,")
+        if not remaining:
+            break
+        parts = remaining.split(None, 1)
+        ref = parts[0]
+        remaining = parts[1] if len(parts) > 1 else ""
+        yield ref.rstrip(",")
+        if not ref.endswith(","):
+            _, _, remaining = remaining.partition(",")
+
+
+def css_urls(css):
+    """Collect CSS url() references and quoted @imports, excluding comments."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    pattern = r'''url\(\s*(?:"([^"]*)"|'([^']*)'|([^\s)]*))\s*\)|@import\s+["']([^"']+)["']'''
+    for match in re.finditer(pattern, css, flags=re.I):
+        yield next(value for value in match.groups() if value is not None), match.group(0)
+
+
+def check_assets(page, root):
+    """Check requested URLs and count each local asset once, including CSS assets."""
+    loaded = {}
+    stylesheets = []
+
+    def resource(ref, context, base=SITE + "/", kind=None):
+        if not ref or ref.startswith("#"):
+            return
+        absolute = urljoin(base, ref.strip())
+        if urlparse(absolute).scheme.lower() == "data":
+            return  # Already included in the containing HTML/CSS byte count.
+        parsed = urlparse(absolute)
+        if parsed.scheme not in ("http", "https") or parsed.netloc != urlparse(SITE).netloc:
+            fail(f"{context}: third-party subresource {ref}")
+            return
+        path = local_path(absolute)
+        if path is None:  # Vercel injects these resources at deploy time.
+            return
+        path = os.path.normpath(path)
+        filename = os.path.join(root, path)
+        if not os.path.isfile(filename):
+            # HTML href/src/srcset existence is checked separately.
+            if "CSS" in context:
+                fail(f"{context} does not exist in the repo")
+            return
+        suffix = os.path.splitext(path)[1].lower()
+        if suffix in {".woff", ".woff2", ".ttf", ".otf", ".eot"}:
+            kind = "font"
+        elif suffix in {".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif", ".svg", ".ico", ".bmp"}:
+            kind = "image"
+        size = os.path.getsize(filename)
+        previous = loaded.setdefault(path, set())
+        budget = {"image": MAX_IMAGE_BYTES, "font": MAX_FONT_BYTES}.get(kind)
+        if budget is not None and kind not in previous and size > budget:
+            fail(f"{path}: {kind} is {size} bytes, exceeds {budget}-byte budget")
+        if not previous and (kind == "stylesheet" or suffix == ".css"):
+            stylesheets.append((path, absolute))
+        previous.add(kind)
+
+    for tag, attrs, line in page.tags:
+        context = f"index.html:{line}"
+        if tag == "link":
+            rels = set((attrs.get("rel") or "").lower().split())
+            if rels & {"stylesheet", "preload", "modulepreload", "icon"}:
+                kind = "stylesheet" if "stylesheet" in rels else attrs.get("as")
+                if "icon" in rels:
+                    kind = "image"
+                resource(attrs.get("href"), context, kind=kind)
+        if tag in {"script", "img", "source", "iframe", "video", "audio"}:
+            kind = "image" if tag == "img" else None
+            resource(attrs.get("src"), context, kind=kind)
+            if tag in {"img", "source"}:
+                for ref in srcset_urls(attrs.get("srcset")):
+                    resource(ref, context, kind="image")
+            if tag == "video":
+                resource(attrs.get("poster"), context, kind="image")
+    for css in page.styles:
+        for ref, expression in css_urls(css):
+            resource(ref, f"index.html: CSS {expression}")
+    while stylesheets:
+        path, base = stylesheets.pop()
+        with open(os.path.join(root, path), encoding="utf-8") as f:
+            for ref, expression in css_urls(f.read()):
+                resource(ref, f"{path}: CSS {expression}", base)
+
+    html_size = os.path.getsize(os.path.join(root, "index.html"))
+    if html_size > MAX_HTML_BYTES:
+        fail(f"index.html: {html_size} bytes, exceeds {MAX_HTML_BYTES}-byte HTML budget")
+    total = html_size + sum(os.path.getsize(os.path.join(root, path))
+                            for path in loaded if path != "index.html")
+    if total > MAX_TOTAL_BYTES:
+        fail(f"index.html plus loaded assets: {total} bytes, exceeds {MAX_TOTAL_BYTES}-byte total budget")
 
 
 def check_html(root=ROOT):
@@ -174,7 +289,7 @@ def check_html(root=ROOT):
             if attr in a:
                 refs.append((a[attr], line))
         if "srcset" in a:
-            refs += [(c.strip().split()[0], line) for c in a["srcset"].split(",") if c.strip()]
+            refs += [(ref, line) for ref in srcset_urls(a["srcset"])]
         if t == "meta" and (a.get("property") or a.get("name") or "").endswith(":image"):
             refs.append((a.get("content"), line))
     for ref, line in refs:
@@ -183,10 +298,7 @@ def check_html(root=ROOT):
         path = local_path(ref)
         if path and not os.path.isfile(os.path.join(root, path)):
             fail(f"index.html:{line}: {ref} does not exist in the repo")
-    for m in re.finditer(r"url\(([^)]+)\)", src):
-        path = local_path(m.group(1).strip("'\""))
-        if path and not os.path.isfile(os.path.join(root, path)):
-            fail(f"index.html: CSS url({m.group(1)}) does not exist in the repo")
+    check_assets(p, root)
 
     for blob in p.jsonld:
         try:
