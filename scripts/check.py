@@ -13,6 +13,8 @@ date and that the og:image PNG's real dimensions match og:image:width/height.
 Share metadata must agree: og:url matches the canonical URL, twitter:image
 matches og:image, and optional Twitter titles/descriptions match Open Graph.
 It also enforces that /resume.pdf is never linked from the site.
+Local references use exact HTTP(S) site matching and decoded URL paths.
+Sitemap URLs must use https://natwong.dev/ and include that exact homepage URL.
 """
 import json
 import os
@@ -22,7 +24,7 @@ import sys
 from datetime import date
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://natwong.dev"
@@ -108,9 +110,11 @@ def local_path(ref):
     if not ref or ref.startswith(("#", "data:", "mailto:", "tel:")):
         return None
     u = urlparse(ref)
-    if u.scheme and not ref.startswith(SITE):
+    if (u.scheme or u.netloc) and not (
+        u.scheme in ("http", "https") and u.netloc == urlparse(SITE).netloc
+    ):
         return None
-    path = u.path.lstrip("/")
+    path = unquote(u.path).lstrip("/")
     if path.startswith("_vercel/"):  # injected by Vercel at deploy time
         return None
     return path or "index.html"
@@ -215,10 +219,15 @@ def check_html(root=ROOT):
 
 
 def check_files(root=ROOT):
+    sitemap_errors = []
     for name in ("robots.txt", "sitemap.xml"):
         with open(os.path.join(root, name), encoding="utf-8") as f:
             if "resume" in f.read().lower():
-                fail(f"{name}: mentions the resume — it must stay unlisted")
+                message = f"{name}: mentions the resume — it must stay unlisted"
+                if name == "sitemap.xml":
+                    sitemap_errors.append(message)
+                else:
+                    fail(message)
 
     with open(os.path.join(root, "robots.txt"), encoding="utf-8") as f:
         if f"Sitemap: {SITE}/sitemap.xml" not in f.read():
@@ -227,10 +236,16 @@ def check_files(root=ROOT):
     try:
         tree = ET.parse(os.path.join(root, "sitemap.xml"))
         ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-        for loc in tree.getroot().iterfind("s:url/s:loc", ns):
-            path = local_path(loc.text.strip())
+        locations = [(loc.text or "").strip()
+                     for loc in tree.getroot().iterfind("s:url/s:loc", ns)]
+        for loc in locations:
+            if not loc.startswith(SITE + "/"):
+                sitemap_errors.append(f"sitemap.xml: loc {loc!r} must start with {SITE}/")
+            path = local_path(loc)
             if path and not os.path.isfile(os.path.join(root, path)):
-                fail(f"sitemap.xml: {loc.text} does not exist in the repo")
+                fail(f"sitemap.xml: {loc} does not exist in the repo")
+        if SITE + "/" not in locations:
+            sitemap_errors.append(f"sitemap.xml: must include {SITE}/ exactly")
         for lm in tree.getroot().iterfind("s:url/s:lastmod", ns):
             text = (lm.text or "").strip()
             try:
@@ -244,6 +259,9 @@ def check_files(root=ROOT):
                 fail(f"sitemap.xml: lastmod {text} is in the future")
     except ET.ParseError as e:
         fail(f"sitemap.xml: does not parse: {e}")
+    if sitemap_errors:
+        # Report sitemap URL policy violations together, including unlisted files.
+        fail("; ".join(sitemap_errors))
 
     try:
         with open(os.path.join(root, "vercel.json"), encoding="utf-8") as f:
