@@ -72,6 +72,111 @@ class SiteChecksTest(unittest.TestCase):
     def test_valid_site(self):
         self.assertEqual(check.check_site(self.root), [])
 
+    def test_real_site(self):
+        self.assertEqual(check.check_site(), [])
+
+    def test_missing_canonical(self):
+        self.replace_html('<link rel="canonical" href="https://natwong.dev/">', '')
+        failures = check.check_site(self.root)
+        self.assertTrue(any('canonical should be exactly https://natwong.dev/' in error
+                            for error in failures), failures)
+
+    def test_wrong_canonical(self):
+        self.replace_html('rel="canonical" href="https://natwong.dev/"',
+                          'rel="canonical" href="https://example.com/"')
+        failures = check.check_site(self.root)
+        self.assertTrue(any('canonical should be exactly https://natwong.dev/' in error
+                            for error in failures), failures)
+
+    def test_invalid_jsonld(self):
+        self.replace_html('{"url":"https://natwong.dev/"}', '{invalid json}')
+        self.assert_failure('JSON-LD does not parse:')
+
+    def test_missing_jsonld_image(self):
+        self.replace_html('{"url":"https://natwong.dev/"}',
+                          '{"image":"https://natwong.dev/missing.png"}')
+        self.assert_failure('JSON-LD image https://natwong.dev/missing.png does not exist')
+
+    def test_duplicate_id(self):
+        self.replace_html('<h2>Section</h2>',
+                          '<h2 id="section">Section</h2><p id="section">Duplicate</p>')
+        self.assert_failure('duplicate id #section')
+
+    def test_missing_anchor_target(self):
+        self.replace_html('<a href="/"', '<a href="#missing"')
+        self.assert_failure('anchor #missing has no matching id')
+
+    def test_image_without_width(self):
+        self.replace_html(' width="1200"', '')
+        self.assert_failure('<img> without width/height (layout shift)')
+
+    def test_image_without_height(self):
+        self.replace_html(' height="630"', '')
+        self.assert_failure('<img> without width/height (layout shift)')
+
+    def test_missing_css_url_file(self):
+        self.replace_html('</head>',
+                          '<style>body { background: url("missing.png"); }</style></head>')
+        self.assert_failure('CSS url("missing.png") does not exist in the repo')
+
+    def test_missing_srcset_file(self):
+        self.replace_html('src="share.png"',
+                          'src="share.png" srcset="share.png 1x, missing.png 2x"')
+        self.assert_failure('missing.png does not exist in the repo')
+
+    def test_missing_robots_sitemap_line(self):
+        self.write('robots.txt', 'User-agent: *\n')
+        self.assert_failure('robots.txt: missing Sitemap line')
+
+    def test_robots_mentions_resume(self):
+        self.write('robots.txt', 'User-agent: *\nDisallow: /resume.pdf\n'
+                   'Sitemap: https://natwong.dev/sitemap.xml\n')
+        self.assert_failure('robots.txt: mentions the resume — it must stay unlisted')
+
+    def test_sitemap_mentions_resume(self):
+        # Keep the listed file present to isolate the unlisted-resume rule.
+        (self.root / 'resume.pdf').touch()
+        self.write('sitemap.xml', self.sitemap.format(lastmod=date.today().isoformat())
+                   .replace('https://natwong.dev/', 'https://natwong.dev/resume.pdf'))
+        self.assert_failure('sitemap.xml: mentions the resume — it must stay unlisted')
+
+    def test_invalid_sitemap_xml(self):
+        self.write('sitemap.xml', '<urlset>')
+        self.assert_failure('sitemap.xml: does not parse:')
+
+    def test_invalid_lastmod_month(self):
+        self.write('sitemap.xml', self.sitemap.format(lastmod='2026-13-01'))
+        self.assert_failure("lastmod '2026-13-01' is not a valid YYYY-MM-DD date")
+
+    def test_wrong_lastmod_format(self):
+        self.write('sitemap.xml', self.sitemap.format(lastmod='11/12/2026'))
+        self.assert_failure("lastmod '11/12/2026' is not a valid YYYY-MM-DD date")
+
+    def test_og_image_not_png(self):
+        self.write('share.png', 'This is not a PNG image.')
+        self.assert_failure('share.png: og:image is not a valid PNG')
+
+    def test_og_image_width_not_integer(self):
+        self.replace_html('content="1200"', 'content="wide"')
+        self.assert_failure('og:image:width / og:image:height missing or not integers')
+
+    def test_missing_main(self):
+        self.write('index.html', self.html.replace('<main>', '<div>')
+                   .replace('</main>', '</div>'))
+        self.assert_failure('expected exactly one <main> landmark')
+
+    def test_two_main(self):
+        self.replace_html('</main>', '</main><main></main>')
+        self.assert_failure('expected exactly one <main> landmark')
+
+    def test_missing_required_meta(self):
+        self.replace_html('<meta name="viewport" content="width=device-width, initial-scale=1">', '')
+        self.assert_failure('missing <meta> viewport')
+
+    def test_blank_link_without_hint(self):
+        self.replace_html('<span class="sr-only">(opens in a new tab)</span>', '')
+        self.assert_failure('target=_blank link without an "(opens in a new tab)" hint')
+
     def test_missing_lang(self):
         self.replace_html(' lang="en"', '')
         self.assert_failure('<html> is missing lang')
