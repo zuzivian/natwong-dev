@@ -21,6 +21,7 @@ Working notes for maintenance runs. Static single-page site, Vercel deploys `mai
 - External new-tab links have screen-reader hints but no visual hint; consider a visual hint, low priority.
 
 ## Gotchas
+- Bump `sitemap.xml`'s `lastmod` to the latest page-change commit date when page content changes.
 - Everything in the repo root is publicly served by Vercel, including README.md, NOTES.md and scripts/. Don't put anything private here.
 - Don't add a root `package.json`: Vercel would start treating the site as a Node build.
 - `headshot.jpg` (700px) stays for the JSON-LD `image`; the page uses `headshot-400.jpg`.
