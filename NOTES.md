@@ -8,6 +8,7 @@ Working notes for maintenance runs. Static single-page site, Vercel deploys `mai
 - Visual check: `python3 -m http.server` and load at 1280 and 390 wide.
 
 ## Done
+- 2026-11-12: added CSS new-tab arrow markers with empty alternative text in supporting browsers, preserving the existing screen-reader hints (#42).
 - 2026-11-07: a11y pass (`--ink-3` contrast 3.1:1 → 4.96:1, skip link, `<main>`, timeline scroller keyboard-focusable while it scrolls, timeline h4 → h3); headshot served as 400px `headshot-400.jpg` (72 KB → 29 KB); sitemap lastmod 2026-10-31; added `scripts/check.py`.
 
 - 2026-11-10: `.github/workflows/check.yml` runs `scripts/check.py` on push and pull_request (approved by Nat 2026-11-09). Actions pinned to commit SHAs (checkout v6.1.0, setup-python v6.3.0), Python 3.13, read-only token, no dependencies.
@@ -18,7 +19,6 @@ Working notes for maintenance runs. Static single-page site, Vercel deploys `mai
 
 ## Next
 - Consider a 404 page (it's a new page, so Nat's call).
-- External new-tab links have screen-reader hints but no visual hint; consider a visual hint, low priority.
 
 ## Gotchas
 - Bump `sitemap.xml`'s `lastmod` to the latest page-change commit date when page content changes.

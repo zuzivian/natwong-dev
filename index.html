@@ -74,6 +74,14 @@
   }
   ::selection{ background: var(--blue); color: #fff; }
   a{ color: var(--blue); }
+  a[target="_blank"]::after{
+    content: "↗";
+    content: "↗" / ""; /* Decorative; .sr-only supplies the new-tab hint. */
+    display: inline-block;
+    margin-left: 0.2em;
+    font-size: 0.8em;
+    color: currentColor;
+  }
 
   .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
 
