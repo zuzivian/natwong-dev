@@ -27,6 +27,7 @@ class SiteChecksTest(unittest.TestCase):
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://natwong.dev/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://natwong.dev/share.png">
 <link rel="canonical" href="https://natwong.dev/">
 <script type="application/ld+json">{"url":"https://natwong.dev/"}</script>
 </head>

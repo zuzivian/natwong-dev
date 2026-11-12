@@ -10,6 +10,8 @@ alt text, heading order, one h1, main landmark, safe target=_blank with
 screen-reader hints).
 It also checks that every sitemap <lastmod> is a valid, non-future YYYY-MM-DD
 date and that the og:image PNG's real dimensions match og:image:width/height.
+Share metadata must agree: og:url matches the canonical URL, twitter:image
+matches og:image, and optional Twitter titles/descriptions match Open Graph.
 It also enforces that /resume.pdf is never linked from the site.
 """
 import json
@@ -130,12 +132,18 @@ def check_html(root=ROOT):
         fail("index.html: empty <title>")
 
     metas = {(a.get("name") or a.get("property")): a.get("content") for t, a, _ in p.tags if t == "meta"}
-    for key in ("description", "viewport", "og:title", "og:description", "og:image", "og:url", "twitter:card"):
+    for key in ("description", "viewport", "og:title", "og:description", "og:image", "og:url", "twitter:card", "twitter:image"):
         if not metas.get(key):
             fail(f"index.html: missing <meta> {key}")
     canon = [a.get("href") for t, a, _ in p.tags if t == "link" and a.get("rel") == "canonical"]
     if canon != [SITE + "/"]:
         fail(f"index.html: canonical should be exactly {SITE}/ (got {canon})")
+    if [metas.get("og:url")] != canon:
+        fail("index.html: og:url must match the canonical href")
+    for field in ("image", "title", "description"):
+        twitter_key, og_key = f"twitter:{field}", f"og:{field}"
+        if twitter_key in metas and metas[twitter_key] != metas.get(og_key):
+            fail(f"index.html: {twitter_key} must match {og_key}")
 
     # og:image really is the size the og:image:width/height meta tags promise
     og_path = local_path(metas.get("og:image"))
