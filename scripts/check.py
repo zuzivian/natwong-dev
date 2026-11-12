@@ -114,8 +114,8 @@ def local_path(ref):
     return path or "index.html"
 
 
-def check_html():
-    with open(os.path.join(ROOT, "index.html"), encoding="utf-8") as f:
+def check_html(root=ROOT):
+    with open(os.path.join(root, "index.html"), encoding="utf-8") as f:
         src = f.read()
     p = Page()
     p.feed(src)
@@ -139,8 +139,8 @@ def check_html():
 
     # og:image really is the size the og:image:width/height meta tags promise
     og_path = local_path(metas.get("og:image"))
-    if og_path and os.path.isfile(os.path.join(ROOT, og_path)):
-        with open(os.path.join(ROOT, og_path), "rb") as f:
+    if og_path and os.path.isfile(os.path.join(root, og_path)):
+        with open(os.path.join(root, og_path), "rb") as f:
             head = f.read(24)
         if head[:8] != b"\x89PNG\r\n\x1a\n" or head[12:16] != b"IHDR":
             fail(f"{og_path}: og:image is not a valid PNG")
@@ -169,11 +169,11 @@ def check_html():
         if ref and ref.startswith("#") and len(ref) > 1 and ref[1:] not in p.ids:
             fail(f"index.html:{line}: anchor {ref} has no matching id")
         path = local_path(ref)
-        if path and not os.path.isfile(os.path.join(ROOT, path)):
+        if path and not os.path.isfile(os.path.join(root, path)):
             fail(f"index.html:{line}: {ref} does not exist in the repo")
     for m in re.finditer(r"url\(([^)]+)\)", src):
         path = local_path(m.group(1).strip("'\""))
-        if path and not os.path.isfile(os.path.join(ROOT, path)):
+        if path and not os.path.isfile(os.path.join(root, path)):
             fail(f"index.html: CSS url({m.group(1)}) does not exist in the repo")
 
     for blob in p.jsonld:
@@ -184,7 +184,7 @@ def check_html():
             continue
         for key in ("image", "url"):
             path = local_path(data.get(key, ""))
-            if path and not os.path.isfile(os.path.join(ROOT, path)):
+            if path and not os.path.isfile(os.path.join(root, path)):
                 fail(f"index.html: JSON-LD {key} {data[key]} does not exist in the repo")
 
     # accessibility floor
@@ -206,22 +206,22 @@ def check_html():
         fail("index.html: expected exactly one <main> landmark")
 
 
-def check_files():
+def check_files(root=ROOT):
     for name in ("robots.txt", "sitemap.xml"):
-        with open(os.path.join(ROOT, name), encoding="utf-8") as f:
+        with open(os.path.join(root, name), encoding="utf-8") as f:
             if "resume" in f.read().lower():
                 fail(f"{name}: mentions the resume — it must stay unlisted")
 
-    with open(os.path.join(ROOT, "robots.txt"), encoding="utf-8") as f:
+    with open(os.path.join(root, "robots.txt"), encoding="utf-8") as f:
         if f"Sitemap: {SITE}/sitemap.xml" not in f.read():
             fail("robots.txt: missing Sitemap line")
 
     try:
-        tree = ET.parse(os.path.join(ROOT, "sitemap.xml"))
+        tree = ET.parse(os.path.join(root, "sitemap.xml"))
         ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         for loc in tree.getroot().iterfind("s:url/s:loc", ns):
             path = local_path(loc.text.strip())
-            if path and not os.path.isfile(os.path.join(ROOT, path)):
+            if path and not os.path.isfile(os.path.join(root, path)):
                 fail(f"sitemap.xml: {loc.text} does not exist in the repo")
         for lm in tree.getroot().iterfind("s:url/s:lastmod", ns):
             text = (lm.text or "").strip()
@@ -238,7 +238,7 @@ def check_files():
         fail(f"sitemap.xml: does not parse: {e}")
 
     try:
-        with open(os.path.join(ROOT, "vercel.json"), encoding="utf-8") as f:
+        with open(os.path.join(root, "vercel.json"), encoding="utf-8") as f:
             cfg = json.load(f)
         noindex = [h for h in cfg.get("headers", []) if h.get("source") == "/resume.pdf"
                    and any(x.get("key") == "X-Robots-Tag" and "noindex" in x.get("value", "") for x in h.get("headers", []))]
@@ -248,9 +248,17 @@ def check_files():
         fail(f"vercel.json: does not parse: {e}")
 
 
-check_html()
-check_files()
-if errors:
-    print("\n".join("FAIL " + e for e in errors))
-    sys.exit(1)
-print("OK: all site checks passed")
+def check_site(root=ROOT):
+    """Check a site directory, returning only the errors from this run."""
+    errors.clear()
+    check_html(root)
+    check_files(root)
+    return errors.copy()
+
+
+if __name__ == "__main__":
+    failures = check_site()
+    if failures:
+        print("\n".join("FAIL " + e for e in failures))
+        sys.exit(1)
+    print("OK: all site checks passed")

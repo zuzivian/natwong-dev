@@ -4,6 +4,7 @@ Working notes for maintenance runs. Static single-page site, Vercel deploys `mai
 
 ## Checks
 - `python3 scripts/check.py` — stdlib only, no install. CI runs it on every push and PR (`.github/workflows/check.yml`). Local refs resolve, JSON-LD / sitemap / vercel.json parse, SEO meta present, a11y floor (lang, alt, one h1, heading order, one `<main>`, `rel=noopener` and screen-reader hints for new-tab links), and `/resume.pdf` is never linked or listed.
+- `python3 -m unittest discover -s scripts -p 'test_*.py'` — stdlib unit tests for the checker; fixtures are generated in temporary directories, no install.
 - Visual check: `python3 -m http.server` and load at 1280 and 390 wide.
 
 ## Done
