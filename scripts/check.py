@@ -6,7 +6,8 @@
 Exits non-zero and lists every failure. Covers build health (every local
 reference resolves, JSON-LD and vercel.json parse), SEO hygiene (title,
 description, canonical, OG image, sitemap) and an accessibility floor (lang,
-alt text, heading order, one h1, main landmark, safe target=_blank).
+alt text, heading order, one h1, main landmark, safe target=_blank with
+screen-reader hints).
 It also checks that every sitemap <lastmod> is a valid, non-future YYYY-MM-DD
 date and that the og:image PNG's real dimensions match og:image:width/height.
 It also enforces that /resume.pdf is never linked from the site.
@@ -40,11 +41,24 @@ class Page(HTMLParser):
         self._in_jsonld = False
         self._title = None
         self.title = ""
+        self._blank_line = None
+        self._link_hint = False
+        self._link_elements = []  # (tag, text chunks if sr-only, otherwise None)
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         line = self.getpos()[0]
         self.tags.append((tag, a, line))
+        if tag == "a" and a.get("target") == "_blank":
+            self._blank_line = line
+            self._link_hint = False
+            self._link_elements = []
+        elif self._blank_line is not None and tag not in {
+            "area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr",
+        }:
+            chunks = [] if "sr-only" in (a.get("class") or "").split() else None
+            self._link_elements.append((tag, chunks))
         if "id" in a:
             if a["id"] in self.ids:
                 fail(f"index.html:{line}: duplicate id #{a['id']}")
@@ -58,12 +72,29 @@ class Page(HTMLParser):
             self._title = ""
 
     def handle_endtag(self, tag):
+        if self._blank_line is not None:
+            # Keep descendant text together even when inline tags split the hint.
+            for i in range(len(self._link_elements) - 1, -1, -1):
+                if self._link_elements[i][0] == tag or tag == "a":
+                    for _, chunks in self._link_elements[i:]:
+                        if chunks is not None and "opens in a new tab" in " ".join("".join(chunks).split()):
+                            self._link_hint = True
+                    del self._link_elements[i:]
+                    if tag != "a":
+                        break
+            if tag == "a":
+                if not self._link_hint:
+                    fail(f'index.html:{self._blank_line}: target=_blank link without an "(opens in a new tab)" hint')
+                self._blank_line = None
         if tag == "script":
             self._in_jsonld = False
         if tag == "title" and self._title is not None:
             self.title, self._title = self._title.strip(), None
 
     def handle_data(self, data):
+        for _, chunks in self._link_elements:
+            if chunks is not None:
+                chunks.append(data)
         if self._in_jsonld:
             self.jsonld[-1] += data
         if self._title is not None:
