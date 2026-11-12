@@ -57,6 +57,7 @@
     --maxw: 940px;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-padding-top: calc(var(--bar-h) + 8px); }
   @media (prefers-reduced-motion: no-preference){
     html{ scroll-behavior: smooth; }
   }
@@ -238,7 +239,7 @@
   }
 
   /* ---------- SECTIONS ---------- */
-  section{ padding: 60px 0; border-top: 1px solid var(--line); scroll-margin-top: var(--bar-h); }
+  section{ padding: 60px 0; border-top: 1px solid var(--line); scroll-margin-top: -8px; }
   .head{ margin-bottom: 30px; }
   .head h2{
     font-family: 'Space Grotesk', sans-serif;
@@ -309,7 +310,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 26px 28px;
-    scroll-margin-top: calc(var(--bar-h) + 16px);
+    scroll-margin-top: 8px;
   }
   .case .card-head{ margin-bottom: 14px; }
   .case h3{
