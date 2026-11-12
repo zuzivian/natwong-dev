@@ -7,7 +7,7 @@ Exits non-zero and lists every failure. Covers build health (every local
 reference resolves, JSON-LD and vercel.json parse), SEO hygiene (title,
 description, canonical, OG image, sitemap) and an accessibility floor (lang,
 alt text, heading order, one h1, main landmark, safe target=_blank with
-screen-reader hints).
+screen-reader hints, valid ARIA/label ID references, and named links/buttons).
 It also checks that every sitemap <lastmod> is a valid, non-future YYYY-MM-DD
 date and that the og:image PNG's real dimensions match og:image:width/height.
 Share metadata must agree: og:url matches the canonical URL, twitter:image
@@ -35,6 +35,10 @@ MAX_HTML_BYTES = 60_000  # Today's index.html: 42,860 bytes.
 MAX_IMAGE_BYTES = 120_000  # Today's loaded image: 29,498 bytes.
 MAX_FONT_BYTES = 60_000  # Today's largest font: 45,712 bytes.
 MAX_TOTAL_BYTES = 250_000  # Today's HTML plus unique loaded assets: 169,954 bytes.
+VOID_ELEMENTS = {
+    "area", "base", "br", "col", "embed", "hr", "img", "input",
+    "link", "meta", "param", "source", "track", "wbr",
+}
 errors = []
 
 
@@ -48,6 +52,10 @@ class Page(HTMLParser):
         self.tags = []      # (tag, attrs dict, line)
         self.headings = []  # (level, line)
         self.ids = set()
+        self.id_refs = []   # (attribute, target id, line)
+        self.controls = []  # (tag, attrs, line, name text chunks)
+        self._elements = []  # (tag, hidden from accessible name)
+        self._open_controls = []  # (element depth, name text chunks)
         self.jsonld = []
         self.styles = []
         self._in_style = False
@@ -62,6 +70,22 @@ class Page(HTMLParser):
         a = dict(attrs)
         line = self.getpos()[0]
         self.tags.append((tag, a, line))
+        for attr in ("aria-labelledby", "aria-describedby", "aria-controls", "aria-owns"):
+            self.id_refs.extend((attr, target, line) for target in (a.get(attr) or "").split())
+        if tag == "label" and a.get("for"):
+            self.id_refs.append(("for", a["for"], line))
+        hidden = (bool(self._elements and self._elements[-1][1])
+                  or (a.get("aria-hidden") or "").lower() == "true"
+                  or tag in {"script", "style"})
+        if tag == "button" or (tag == "a" and "href" in a):
+            chunks = []
+            self.controls.append((tag, a, line, chunks))
+            self._open_controls.append((len(self._elements) + 1, chunks))
+        if tag == "img" and not hidden:
+            for _, chunks in self._open_controls:
+                chunks.append(a.get("alt") or "")
+        if tag not in VOID_ELEMENTS:
+            self._elements.append((tag, hidden))
         if a.get("style"):
             self.styles.append(a["style"])
         if tag == "style":
@@ -71,10 +95,7 @@ class Page(HTMLParser):
             self._blank_line = line
             self._link_hint = False
             self._link_elements = []
-        elif self._blank_line is not None and tag not in {
-            "area", "base", "br", "col", "embed", "hr", "img", "input",
-            "link", "meta", "param", "source", "track", "wbr",
-        }:
+        elif self._blank_line is not None and tag not in VOID_ELEMENTS:
             chunks = [] if "sr-only" in (a.get("class") or "").split() else None
             self._link_elements.append((tag, chunks))
         if "id" in a:
@@ -90,6 +111,12 @@ class Page(HTMLParser):
             self._title = ""
 
     def handle_endtag(self, tag):
+        for i in range(len(self._elements) - 1, -1, -1):
+            if self._elements[i][0] == tag:
+                del self._elements[i:]
+                self._open_controls = [(depth, chunks) for depth, chunks in self._open_controls
+                                       if depth <= i]
+                break
         if tag == "style":
             self._in_style = False
         if self._blank_line is not None:
@@ -111,7 +138,15 @@ class Page(HTMLParser):
         if tag == "title" and self._title is not None:
             self.title, self._title = self._title.strip(), None
 
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in VOID_ELEMENTS:
+            self.handle_endtag(tag)
+
     def handle_data(self, data):
+        if self._elements and not self._elements[-1][1]:
+            for _, chunks in self._open_controls:
+                chunks.append(data)
         if self._in_style:
             self.styles[-1] += data
         for _, chunks in self._link_elements:
@@ -312,6 +347,13 @@ def check_html(root=ROOT):
                 fail(f"index.html: JSON-LD {key} {data[key]} does not exist in the repo")
 
     # accessibility floor
+    for attr, target, line in p.id_refs:
+        if target not in p.ids:
+            fail(f"index.html:{line}: {attr} references #{target} with no matching id")
+    for tag, attrs, line, chunks in p.controls:
+        if not ("".join(chunks).strip() or (attrs.get("aria-label") or "").strip()
+                or (attrs.get("aria-labelledby") or "").strip()):
+            fail(f"index.html:{line}: <{tag}> without an accessible name")
     for t, a, line in p.tags:
         if t == "img" and "alt" not in a:
             fail(f"index.html:{line}: <img> without alt")
