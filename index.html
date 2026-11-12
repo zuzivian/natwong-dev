@@ -970,7 +970,7 @@
   var N = window.matchMedia('(max-width: 560px)').matches ? 3 : 5;
   var AMBER = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || '#D98A00';
   var IDS = ['AC-214','AC-071','AC-336','AC-108','AC-492','AC-155','AC-023','AC-287'];
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // Each contact flies a straight chord between two independent points on the scope
   // boundary, so the paths fan out naturally instead of all crossing the centre.
@@ -1047,31 +1047,36 @@
     });
   }
 
-  if(reduce){ render(0); return; }
+  render(0);
 
-  // Animate only while the scope is on screen and the tab is visible.
-  var start = null, shift = 0, last = 0, running = false, onscreen = true;
+  // Animate only while visible and motion is allowed.
+  var start = null, shift = 0, last = 0, running = false, onscreen = true, raf = null;
   function frame(now){
     if(!running) return;
     if(start === null) start = now;
     last = now - start - shift;
     render(last);
-    requestAnimationFrame(frame);
+    raf = requestAnimationFrame(frame);
   }
   function sync(){
-    var want = onscreen && !document.hidden;
+    var want = onscreen && !document.hidden && !reduce.matches;
+    if(reduce.matches) render(last);
     if(want === running) return;
     running = want;
     if(running){
       // resume from where the animation stopped rather than jumping ahead
       start = null;
       var resumeAt = last;
-      requestAnimationFrame(function(now){
+      raf = requestAnimationFrame(function(now){
         start = now - resumeAt; shift = 0;
         frame(now);
       });
+    } else {
+      cancelAnimationFrame(raf);
     }
   }
+  if(reduce.addEventListener) reduce.addEventListener('change', sync);
+  else reduce.addListener(sync);
   document.addEventListener('visibilitychange', sync);
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(e){ onscreen = e[0].isIntersecting; sync(); }).observe(svg);
